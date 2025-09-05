@@ -1,0 +1,30 @@
+:root{
+
+--cinza: "#EBEBEC"
+
+--preto: "#000000"
+--rosa: "#FFC0CB"
+--verde: "#8BC34A"
+
+
+}
+
+*{
+
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+
+
+}
+
+body{
+
+  background-color: var(--cinza);
+}
+
+body, input, textarea, button{
+
+font-family: 'Courier New', Courier, monospace;
+
+}
