@@ -1,6 +1,18 @@
+import { useEffect, useState } from "react";
 import styles from "./home.module.css";
 import { Clock } from "../../components";
+import axios from "axios";
+
 const Inicial = () => {
+  const [seconds, setSeconds] = useState(null);
+
+  useEffect(() => {
+  axios.get("http://localhost:3000/tempo")
+    .then(res => setSeconds(res.data.horario))
+    .catch(err => console.error("Erro ao carregar tempo:", err));
+}, []);
+
+
   return (
     <div className={styles.container}>
       {/* Título */}
@@ -9,19 +21,19 @@ const Inicial = () => {
       {/* Panda com relógio */}
       <div className={styles.pandaSection}>
         <img
-          src="../../pandaClock.png" 
+          src="../../pandaClock.png"
           alt="Panda Clock"
           className={styles.panda}
         />
 
-<Clock initialSeconds ={120}></Clock>
+<Clock dbUrl="http://localhost:3000/tempo" />
 
         <p className={styles.nextAlarm}>Alarme mais próximo</p>
       </div>
 
       {/* Panda na Lua */}
       <img
-        src="https://png.pngtree.com/png-clipart/20220102/original/pngtree-adorable-baby-panda-sleeping-illustration-in-watercolor-png-image_6995799.png" 
+        src="https://png.pngtree.com/png-clipart/20220102/original/pngtree-adorable-baby-panda-sleeping-illustration-in-watercolor-png-image_6995799.png"
         alt="Panda na Lua"
         className={styles.moonPanda}
       />
@@ -33,19 +45,16 @@ const Inicial = () => {
           alt="Bambu"
         />
       </div>
-{/* Bambu Direito */}
+
+      {/* Bambu Direito */}
       <div className={styles.bambooRight}>
         <img
           src="https://images.vexels.com/media/users/3/158414/isolated/preview/094793b5f05dd54e703f54509344f0a1-ilustracao-de-haste-de-bambu.png"
           alt="Bambu"
         />
       </div>
-      
     </div>
-
-
-
   );
 };
 
-export  {Inicial};
+export { Inicial };
