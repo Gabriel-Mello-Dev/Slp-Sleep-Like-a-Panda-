@@ -1,4 +1,4 @@
-import styles from "./Home.module.css";
+import styles from "./home.module.css";
 import { Clock } from "../../components";
 const Inicial = () => {
   return (
