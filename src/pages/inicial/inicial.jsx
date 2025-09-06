@@ -9,7 +9,7 @@ const Inicial = () => {
       {/* Panda com relógio */}
       <div className={styles.pandaSection}>
         <img
-          src="https://cdn.creazilla.com/cliparts/3227991/panda-clipart-sm.png" 
+          src="../../pandaClock.png" 
           alt="Panda Clock"
           className={styles.panda}
         />
