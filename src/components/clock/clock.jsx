@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "./Clock.module.css";
+import styles from "./clock.module.css";
 
 const Clock = ({ initialSeconds }) => {
   const [timeLeft, setTimeLeft] = useState(initialSeconds);
