@@ -1,0 +1,21 @@
+.clock {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #fff;
+  border: 6px solid #000000; 
+  border-radius: 8px;
+  font-family: "Digital-7", monospace, sans-serif; 
+  font-size: 48px;
+  color: #63d138;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  min-width: 50vw;
+}
+
+.clock::after {
+  content: "";
+  display: block;
+  height: 2px;
+  background: rgba(255, 77, 77, 0.5);
+  margin-top: 4px;
+}
