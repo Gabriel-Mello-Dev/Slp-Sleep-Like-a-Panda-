@@ -21,6 +21,19 @@ const Alarmes = () => {
     }
   };
 
+  const desativarAlarmes = async () => {
+    try {
+      await axios.put("http://localhost:3000/tempo", {
+        horario: 0
+      });
+      setMsg("⏹️ Alarmes desativados!");
+      setTempo("");
+    } catch (error) {
+      setMsg("❌ Erro ao desativar alarmes");
+      console.error(error);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Configurar Alarme</h2>
@@ -34,8 +47,13 @@ const Alarmes = () => {
       <button onClick={salvarTempo} className={styles.button}>
         Salvar
       </button>
+
+      <button onClick={desativarAlarmes} className={`${styles.button} ${styles.stopButton}`}>
+        Desativar Alarmes
+      </button>
+
       {msg && (
-        <p className={msg.includes("✅") ? styles.success : styles.error}>
+        <p className={msg.includes("✅") || msg.includes("⏹️") ? styles.success : styles.error}>
           {msg}
         </p>
       )}
