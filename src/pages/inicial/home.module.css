@@ -1,6 +1,6 @@
 .container {
   position: relative;
-  background-color: #bfbfbf; 
+  background-color: #bfbfbf;
   text-align: center;
   padding: 40px 20px;
   min-height: 70vh;
@@ -14,6 +14,7 @@
   color: #fff;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
   margin-bottom: 20px;
+  animation: fadeIn 2s ease-in-out;
 }
 
 .pandaSection {
@@ -25,6 +26,12 @@
 .panda {
   width: 200px;
   height: auto;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.panda:hover {
+  transform: scale(1.15);
 }
 
 .nextAlarm {
@@ -39,31 +46,69 @@
   right: 40px;
   width: 120px;
   height: auto;
+  animation: floatMoon 6s ease-in-out infinite;
 }
 
+/* Bambu esquerdo */
 .bambooLeft {
   position: absolute;
   bottom: 0;
   left: 0;
+  animation: sway 5s ease-in-out infinite;
 }
 
 .bambooLeft img {
   height: 300px;
 }
 
+/* Bambu direito */
 .bambooRight {
   position: absolute;
   bottom: 0;
   right: 0;
+  animation: sway 5s ease-in-out infinite reverse;
 }
 
 .bambooRight img {
   height: 300px;
 }
 
-body{
+/* ANIMAÇÕES */
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
 
-height: 100%;
-  background-color: #bfbfbf; 
+  75%{
+        transform: rotate(-10deg);
 
+  }
+}
+
+@keyframes floatMoon {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body {
+  height: 100%;
+  background-color: #bfbfbf;
 }
