@@ -7,11 +7,20 @@ const Inicial = () => {
   const [seconds, setSeconds] = useState(null);
 
   useEffect(() => {
-  axios.get("http://localhost:3000/tempo")
-    .then(res => setSeconds(res.data.horario))
-    .catch(err => console.error("Erro ao carregar tempo:", err));
-}, []);
+    axios
+      .get("http://localhost:3000/tempo")
+      .then((res) => setSeconds(res.data.horario))
+      .catch((err) => console.error("Erro ao carregar tempo:", err));
+  }, []);
 
+  // Função para parar todos os sons
+  const stopAllSounds = () => {
+    const audios = document.querySelectorAll("audio");
+    audios.forEach((audio) => {
+      audio.pause();
+      audio.currentTime = 0; // volta para o início
+    });
+  };
 
   return (
     <div className={styles.container}>
@@ -26,11 +35,12 @@ const Inicial = () => {
           className={styles.panda}
         />
 
-<Clock dbUrl="http://localhost:3000/tempo" />
+        <Clock dbUrl="http://localhost:3000/tempo" />
 
         <p className={styles.nextAlarm}>Alarme mais próximo</p>
       </div>
 
+     
       {/* Panda na Lua */}
       <img
         src="https://png.pngtree.com/png-clipart/20220102/original/pngtree-adorable-baby-panda-sleeping-illustration-in-watercolor-png-image_6995799.png"

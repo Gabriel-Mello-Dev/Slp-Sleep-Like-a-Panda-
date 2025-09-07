@@ -19,3 +19,18 @@
   background: rgba(255, 77, 77, 0.5);
   margin-top: 4px;
 }
+
+.stopButton {
+  margin-left: 10px;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.stopButton:hover {
+  background-color: #e60000;
+}

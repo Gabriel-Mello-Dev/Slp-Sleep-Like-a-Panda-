@@ -7,45 +7,37 @@ const Clock = ({ dbUrl, checkInterval = 2000 }) => {
   const [timeLeft, setTimeLeft] = useState(savedTime ? Number(savedTime) : 0);
   const dbLastValue = useRef(null);
   const audioRef = useRef(null);
+  const [alarmPlaying, setAlarmPlaying] = useState(false);
 
   // carrega som uma vez
   useEffect(() => {
-    audioRef.current = new Audio("/alarme.mp3"); // ou .wav
-    audioRef.current.loop = true; // toca em loop até parar
+    audioRef.current = new Audio("/alarme.mp3"); 
+    audioRef.current.loop = true;
   }, []);
 
   // COUNTDOWN constante
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
-        if (prev > 0) {
-          return prev - 1;
-        } else {
-          if (dbLastValue.current) {
-            // dispara alarme
-            if (audioRef.current) {
-              audioRef.current.currentTime = 0;
-              audioRef.current.play().catch((err) =>
-                console.error("Erro ao tocar som:", err)
-              );
-            }
+        if (prev > 0) return prev - 1;
 
-            // mostra mensagem com botão
-            const parar = window.confirm("⏰ Alarme disparou! Deseja parar?");
-            if (parar && audioRef.current) {
-              audioRef.current.pause();
-              audioRef.current.currentTime = 0;
-            }
+        if (dbLastValue.current && audioRef.current && !alarmPlaying) {
+          audioRef.current.currentTime = 0;
+          audioRef.current.play().catch((err) =>
+            console.error("Erro ao tocar som:", err)
+          );
+          setAlarmPlaying(true);
 
-            return Number(dbLastValue.current); // reseta
-          }
-          return 0;
+                    alert("Saia do computador");
+
         }
+
+        return prev;
       });
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [alarmPlaying]);
 
   // Salva no localStorage
   useEffect(() => {
@@ -71,13 +63,37 @@ const Clock = ({ dbUrl, checkInterval = 2000 }) => {
     return () => clearInterval(interval);
   }, [dbUrl, checkInterval]);
 
+  // função para parar o alarme e resetar timer
+  const stopAlarm = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setAlarmPlaying(false);
+
+    // reseta o timer para o valor do DB
+    if (dbLastValue.current) {
+      setTimeLeft(Number(dbLastValue.current));
+    }
+  };
+
   const formatTime = (seconds) => {
     const m = String(Math.floor(seconds / 60)).padStart(2, "0");
     const s = String(seconds % 60).padStart(2, "0");
     return `${m}:${s}`;
   };
 
-  return <div className={styles.clock}>{formatTime(timeLeft)}</div>;
+  return (
+    <div className={styles.clock}>
+      {formatTime(timeLeft)}
+      <br />
+      {alarmPlaying && (
+        <button onClick={stopAlarm} className={styles.stopButton}>
+          ⏹️ Parar Alarme
+        </button>
+      )}
+    </div>
+  );
 };
 
 export { Clock };
