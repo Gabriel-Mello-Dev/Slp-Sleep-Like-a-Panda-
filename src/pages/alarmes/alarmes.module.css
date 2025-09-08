@@ -2,11 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* joga mais pra cima */
   min-height: 100vh;
-  background: #0f172a; /* fundo escuro elegante */
-  color: #f1f5f9;
   padding: 2rem;
+  background-color: #7a7a7a;
+  color: #454546;
+
+  /* efeito de fade-in geral */
+  animation: fadeIn 1s ease-in-out;
 }
 
 .title {
@@ -14,30 +17,39 @@
   margin-bottom: 2rem;
   font-weight: bold;
   text-align: center;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+
+  /* entrada com leve subida */
+  animation: slideDown 0.8s ease;
 }
 
 .input {
   padding: 0.8rem 1rem;
   font-size: 1rem;
-  border: 2px solid #38bdf8;
+  border: 2px solid #8c8c8c;
   border-radius: 0.5rem;
-  background: #1e293b;
-  color: #f1f5f9;
+  background: #00000056;
+  color: #ffffff;
   outline: none;
   margin-bottom: 1.5rem;
   width: 220px;
   text-align: center;
   transition: 0.3s;
+
+  /* entrada suave */
+  animation: fadeInUp 0.8s ease forwards;
 }
 
 .input:focus {
-  border-color: #0ea5e9;
-  box-shadow: 0 0 8px #0ea5e9;
+  border-color: #666666;
+  box-shadow: 0 0 8px #8c8c8c;
+  color: white;
 }
 
 .button {
-  background: #38bdf8;
-  color: #0f172a;
+  background: #666666;
+  color: #f5e1c8;
   border: none;
   padding: 0.8rem 1.5rem;
   font-size: 1rem;
@@ -45,21 +57,40 @@
   border-radius: 0.5rem;
   cursor: pointer;
   transition: 0.3s;
+  animation: fadeInUp 1s ease forwards;
 }
 
 .button:hover {
-  background: #0ea5e9;
-  transform: scale(1.05);
+  background: #454546;
+  transform: scale(1.1) rotate(-2deg); /* efeito divertido */
 }
 
 .success {
   margin-top: 1rem;
   color: #4ade80;
   font-weight: bold;
+  animation: fadeIn 0.5s ease;
 }
 
 .error {
   margin-top: 1rem;
   color: #f87171;
   font-weight: bold;
+  animation: fadeIn 0.5s ease;
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

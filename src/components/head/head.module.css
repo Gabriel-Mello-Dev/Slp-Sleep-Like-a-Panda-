@@ -70,3 +70,8 @@
 .register:hover {
   background: #333;
 }
+   .effect{
+background-color: #00000000;
+border: none;
+cursor:pointer;
+   }

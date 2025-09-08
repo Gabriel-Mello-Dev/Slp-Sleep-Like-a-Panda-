@@ -10,6 +10,12 @@
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   min-width: 50vw;
+    transition: ease-in-out 1s;
+
+}
+.clock:hover {
+  transform: scale(1.1);
+  transition: ease-in-out 1s;
 }
 
 .clock::after {

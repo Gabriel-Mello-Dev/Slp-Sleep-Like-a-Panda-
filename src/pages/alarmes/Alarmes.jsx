@@ -49,7 +49,7 @@ const Alarmes = () => {
       <button onClick={salvarTempo} className={styles.button}>
         Salvar
       </button>
-
+<br />
       <button
         onClick={desativarAlarmes}
         className={`${styles.button} ${styles.stopButton}`}

@@ -6,6 +6,8 @@ import axios from "axios";
 const Inicial = () => {
   const [seconds, setSeconds] = useState(null);
 const [teste,setTeste]= useState(null);
+const [show,setShow]= useState(false);
+
   useEffect(() => {
     axios
       .get("http://localhost:3000/tempo")
@@ -34,22 +36,48 @@ function chamarApi() {
 
 
   return (
+
+
+
     <div className={styles.container}>
       {/* Título */}
+
+      
+   {show && (
+    <> 
+ <div className={styles.rain}>
+      {Array.from({ length: 20 }).map((_, i) => (
+        <span key={i}>🐼</span>
+      ))}
+    </div>
+
+        </>
+      )}
+
       <h1 className={styles.title}>Sleep Like a Panda</h1>
+
+
 
       {/* Panda com relógio */}
       <div className={styles.pandaSection}>
+         <button onClick={() => setShow(!show)}  className={styles.effect}>
         <img
           src="../../pandaClock.png"
           alt="Panda Clock"
           className={styles.panda}
         />
-
+</button>
       <Clock dbUrl="http://localhost:3000/User" /> 
 
-        <p className={styles.nextAlarm}>Alarme mais próximo</p>
-      </div>
+<p className={styles.nextAlarm}>
+    <p>Proximo </p>
+
+  {" Alarme".split("").map((char, i) => (
+    <span key={i}>{char}</span>
+  ))}
+</p>     
+
+ </div>
 
      
       {/* Panda na Lua */}
@@ -75,7 +103,6 @@ function chamarApi() {
         />
       </div>
 
-<button onClick={chamarApi}>Teste</button>
 
     </div>
   );
