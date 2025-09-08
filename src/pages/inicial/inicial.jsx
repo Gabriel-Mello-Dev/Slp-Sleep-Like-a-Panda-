@@ -5,7 +5,7 @@ import axios from "axios";
 
 const Inicial = () => {
   const [seconds, setSeconds] = useState(null);
-
+const [teste,setTeste]= useState(null);
   useEffect(() => {
     axios
       .get("http://localhost:3000/tempo")
@@ -13,7 +13,6 @@ const Inicial = () => {
       .catch((err) => console.error("Erro ao carregar tempo:", err));
   }, []);
 
-  // Função para parar todos os sons
   const stopAllSounds = () => {
     const audios = document.querySelectorAll("audio");
     audios.forEach((audio) => {
@@ -21,6 +20,18 @@ const Inicial = () => {
       audio.currentTime = 0; // volta para o início
     });
   };
+function chamarApi() {
+  axios
+    .get("http://localhost:3000/User")
+    .then((res) => {
+      const user = res.data; // já é o objeto User
+      setTeste(user);
+
+      alert(`Nome: ${user.nome}, Horário: ${user.tempo.horario}`);
+    })
+    .catch((err) => console.error("Erro ao carregar:", err));
+}
+
 
   return (
     <div className={styles.container}>
@@ -35,7 +46,7 @@ const Inicial = () => {
           className={styles.panda}
         />
 
-        <Clock dbUrl="http://localhost:3000/tempo" />
+      <Clock dbUrl="http://localhost:3000/User" /> 
 
         <p className={styles.nextAlarm}>Alarme mais próximo</p>
       </div>
@@ -63,6 +74,9 @@ const Inicial = () => {
           alt="Bambu"
         />
       </div>
+
+<button onClick={chamarApi}>Teste</button>
+
     </div>
   );
 };

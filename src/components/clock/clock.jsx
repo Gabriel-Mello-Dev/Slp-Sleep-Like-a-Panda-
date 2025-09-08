@@ -9,51 +9,46 @@ const Clock = ({ dbUrl, checkInterval = 2000 }) => {
   const audioRef = useRef(null);
   const [alarmPlaying, setAlarmPlaying] = useState(false);
 
-  // carrega som uma vez
+  // carrega som
   useEffect(() => {
-    audioRef.current = new Audio("/alarme.mp3"); 
+    audioRef.current = new Audio("/alarme.mp3");
     audioRef.current.loop = true;
   }, []);
 
-  // COUNTDOWN constante
+  // Countdown
   useEffect(() => {
+    if (timeLeft <= 0) return; // se o tempo for 0, não continua
+
     const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev > 0) return prev - 1;
-
-        if (dbLastValue.current && audioRef.current && !alarmPlaying) {
-          audioRef.current.currentTime = 0;
-          audioRef.current.play().catch((err) =>
-            console.error("Erro ao tocar som:", err)
-          );
-          setAlarmPlaying(true);
-
-                    alert("Saia do computador");
-
-        }
-
-        return prev;
-      });
+      setTimeLeft(prev => Math.max(prev - 1, 0));
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [alarmPlaying]);
-
-  // Salva no localStorage
-  useEffect(() => {
-    localStorage.setItem("tempo", timeLeft);
   }, [timeLeft]);
 
-  // POLLING do DB
+  // Polling do DB
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
         const res = await axios.get(dbUrl);
-        const dbValue = res.data.horario;
+        const dbValue = Number(res.data.tempo.horario);
 
-        if (dbLastValue.current !== dbValue) {
-          dbLastValue.current = dbValue;
-          setTimeLeft((prev) => (prev !== dbValue ? dbValue : prev));
+        dbLastValue.current = dbValue;
+
+        if (dbValue === 0) {
+          setTimeLeft(0);
+
+          if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+          }
+
+          setAlarmPlaying(false);
+          return;
+        }
+
+        if (dbValue > 0 && dbValue !== timeLeft) {
+          setTimeLeft(dbValue);
         }
       } catch (err) {
         console.error("Erro ao buscar tempo do DB:", err);
@@ -61,23 +56,26 @@ const Clock = ({ dbUrl, checkInterval = 2000 }) => {
     }, checkInterval);
 
     return () => clearInterval(interval);
-  }, [dbUrl, checkInterval]);
+  }, [dbUrl, checkInterval, timeLeft]);
 
-  // função para parar o alarme e resetar timer
+  // toca alarme quando o timer chega a 0
+  useEffect(() => {
+    if (timeLeft === 0 && dbLastValue.current > 0 && !alarmPlaying) {
+      if (audioRef.current) audioRef.current.play().catch(() => {});
+      setAlarmPlaying(true);
+    }
+  }, [timeLeft, alarmPlaying]);
+
   const stopAlarm = () => {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
     setAlarmPlaying(false);
-
-    // reseta o timer para o valor do DB
-    if (dbLastValue.current) {
-      setTimeLeft(Number(dbLastValue.current));
-    }
+    setTimeLeft(dbLastValue.current);
   };
 
-  const formatTime = (seconds) => {
+  const formatTime = seconds => {
     const m = String(Math.floor(seconds / 60)).padStart(2, "0");
     const s = String(seconds % 60).padStart(2, "0");
     return `${m}:${s}`;

@@ -46,7 +46,14 @@
   right: 40px;
   width: 120px;
   height: auto;
-  animation: floatMoon 6s ease-in-out infinite;
+   transition: ease-in-out 2s;
+
+}
+
+.moonPanda:hover {
+ transform: rotate(360deg);
+ transition: ease-in-out 2s;
+
 }
 
 /* Bambu esquerdo */
