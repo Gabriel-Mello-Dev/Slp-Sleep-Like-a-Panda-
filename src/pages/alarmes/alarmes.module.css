@@ -62,7 +62,7 @@
 
 .button:hover {
   background: #454546;
-  transform: scale(1.1) rotate(-2deg); /* efeito divertido */
+  transform: scale(1.1) rotate(-2deg); 
 }
 
 .success {
@@ -78,6 +78,23 @@
   font-weight: bold;
   animation: fadeIn 0.5s ease;
 }
+
+.alarmesLista {
+  display: flex;
+  flex-direction: column; 
+  gap: 16px; 
+  margin-top: 20px;
+}
+
+.alarmeItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
 
 
 @keyframes fadeIn {

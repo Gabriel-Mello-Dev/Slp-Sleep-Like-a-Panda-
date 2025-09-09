@@ -2,7 +2,8 @@
   "User": {
     "nome": "oi",
     "tempo": {
-      "horario": 10
+      "horario": 0,
+      "tipo": 0
     }
   }
 }

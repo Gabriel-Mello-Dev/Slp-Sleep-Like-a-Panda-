@@ -8,16 +8,26 @@ const Clock = ({ dbUrl, checkInterval = 2000 }) => {
   const dbLastValue = useRef(null);
   const audioRef = useRef(null);
   const [alarmPlaying, setAlarmPlaying] = useState(false);
+  const [alarmType, setAlarmType] = useState(1); 
 
-  // carrega som
+  // carrega som quando o tipo muda
   useEffect(() => {
-    audioRef.current = new Audio("/alarme.mp3");
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+
+    let src = "/alarme.mp3";
+    if (alarmType === 2) src = "/alarme2.mp3";
+    if (alarmType === 3) src = "/alarme3.mp3";
+
+    audioRef.current = new Audio(src);
     audioRef.current.loop = true;
-  }, []);
+  }, [alarmType]);
 
   // Countdown
   useEffect(() => {
-    if (timeLeft <= 0) return; // se o tempo for 0, não continua
+    if (timeLeft <= 0) return;
 
     const timer = setInterval(() => {
       setTimeLeft(prev => Math.max(prev - 1, 0));
@@ -32,8 +42,10 @@ const Clock = ({ dbUrl, checkInterval = 2000 }) => {
       try {
         const res = await axios.get(dbUrl);
         const dbValue = Number(res.data.tempo.horario);
+        const dbType = Number(res.data.tempo.tipo);
 
         dbLastValue.current = dbValue;
+        setAlarmType(dbType); // atualiza tipo
 
         if (dbValue === 0) {
           setTimeLeft(0);
@@ -58,7 +70,7 @@ const Clock = ({ dbUrl, checkInterval = 2000 }) => {
     return () => clearInterval(interval);
   }, [dbUrl, checkInterval, timeLeft]);
 
-  // toca alarme quando o timer chega a 0
+  // toca alarme quando chega a 0
   useEffect(() => {
     if (timeLeft === 0 && dbLastValue.current > 0 && !alarmPlaying) {
       if (audioRef.current) audioRef.current.play().catch(() => {});

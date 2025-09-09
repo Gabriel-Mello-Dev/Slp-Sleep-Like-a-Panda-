@@ -4,17 +4,39 @@ import styles from "./alarmes.module.css";
 
 const Alarmes = () => {
   const [tempo, setTempo] = useState("");
-  const [msg, setMsg] = useState("");
+  const [msg, setMsg] = useState(""); // faltava isso 👈
+  const [checks, setChecks] = useState({
+    alarme1: false,
+    alarme2: false,
+    alarme3: false,
+  });
 
   const salvarTempo = async () => {
-    if (!tempo) return setMsg("⚠️ Digite um tempo!");
+    if (!tempo) {
+      setMsg("⚠️ Digite um tempo!");
+      return;
+    }
+
+    let tipo = 0;
+    if (checks.alarme1) tipo = 1;
+    else if (checks.alarme2) tipo = 2;
+    else if (checks.alarme3) tipo = 3;
+
+    if (tipo === 0) {
+      setMsg("⚠️ Escolha um alarme!");
+      return;
+    }
 
     try {
       await axios.put("http://localhost:3000/User", {
-        nome: "oi", // se precisar manter o nome
-        tempo: { horario: Number(tempo) }
+        nome: "oi",
+        tempo: {
+          horario: Number(tempo),
+          tipo: tipo,
+        },
       });
-      setMsg("✅ Tempo salvo com sucesso!");
+
+      setMsg(`✅ Alarme ${tipo} salvo com sucesso!`);
       setTempo("");
     } catch (error) {
       setMsg("❌ Erro ao salvar tempo");
@@ -25,8 +47,8 @@ const Alarmes = () => {
   const desativarAlarmes = async () => {
     try {
       await axios.put("http://localhost:3000/User", {
-        nome: "oi", // se precisar manter
-        tempo: { horario: 0 }
+        nome: "oi",
+        tempo: { horario: 0, tipo: 0 },
       });
       setMsg("⏹️ Alarmes desativados!");
       setTempo("");
@@ -39,6 +61,7 @@ const Alarmes = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Configurar Alarme</h2>
+
       <input
         type="number"
         placeholder="Digite o tempo (segundos)"
@@ -49,7 +72,9 @@ const Alarmes = () => {
       <button onClick={salvarTempo} className={styles.button}>
         Salvar
       </button>
-<br />
+
+      <br />
+
       <button
         onClick={desativarAlarmes}
         className={`${styles.button} ${styles.stopButton}`}
@@ -68,6 +93,45 @@ const Alarmes = () => {
           {msg}
         </p>
       )}
+
+      {/* Escolher alarme */}
+      <div className={styles.alarmesLista}>
+        <label className={styles.alarmeItem}>
+          <input
+            type="checkbox"
+            checked={checks.alarme1}
+            onChange={() =>
+              setChecks({ alarme1: true, alarme2: false, alarme3: false })
+            }
+          />
+          <span>Alarme 1</span>
+          <audio controls src="/alarme.mp3"></audio>
+        </label>
+
+        <label className={styles.alarmeItem}>
+          <input
+            type="checkbox"
+            checked={checks.alarme2}
+            onChange={() =>
+              setChecks({ alarme1: false, alarme2: true, alarme3: false })
+            }
+          />
+          <span>Alarme 2</span>
+          <audio controls src="/alarme2.mp3"></audio>
+        </label>
+
+        <label className={styles.alarmeItem}>
+          <input
+            type="checkbox"
+            checked={checks.alarme3}
+            onChange={() =>
+              setChecks({ alarme1: false, alarme2: false, alarme3: true })
+            }
+          />
+          <span>Alarme 3</span>
+          <audio controls src="/alarme3.mp3"></audio>
+        </label>
+      </div>
     </div>
   );
 };
