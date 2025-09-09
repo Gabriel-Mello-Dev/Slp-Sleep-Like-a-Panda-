@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import styles from "./alarmes.module.css";
+import { api } from "../../services";
 
 const Alarmes = () => {
   const [tempo, setTempo] = useState("");
@@ -11,24 +11,21 @@ const Alarmes = () => {
     alarme3: false,
   });
 
-  // ✅ Puxar dados do backend ao carregar
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/User");
-        const tipo = res.data.tempo.tipo; // Pega o tipo do alarme
-        // Atualiza checks com base no tipo
+        const res = await api.get("");
+        const tipo = res.data.tempo.tipo;
         setChecks({
           alarme1: tipo === 1,
           alarme2: tipo === 2,
           alarme3: tipo === 3,
         });
-        setTempo(res.data.tempo.horario || ""); // Pega o horário atual
+        setTempo(res.data.tempo.horario || "");
       } catch (error) {
         console.error("Erro ao buscar dados do usuário:", error);
       }
     };
-
     fetchUser();
   }, []);
 
@@ -49,14 +46,10 @@ const Alarmes = () => {
     }
 
     try {
-      await axios.put("http://localhost:3000/User", {
+      await api.put("", {
         nome: "oi",
-        tempo: {
-          horario: Number(tempo),
-          tipo: tipo,
-        },
+        tempo: { horario: Number(tempo), tipo: tipo },
       });
-
       setMsg(`✅ Alarme ${tipo} salvo com sucesso!`);
       setTempo("");
     } catch (error) {
@@ -67,13 +60,10 @@ const Alarmes = () => {
 
   const desativarAlarmes = async () => {
     try {
-      await axios.put("http://localhost:3000/User", {
-        nome: "oi",
-        tempo: { horario: 0, tipo: 0 },
-      });
+      await api.put("", { nome: "oi", tempo: { horario: 0, tipo: 0 } });
       setMsg("⏹️ Alarmes desativados!");
       setTempo("");
-      setChecks({ alarme1: false, alarme2: false, alarme3: false }); // limpa checkboxes
+      setChecks({ alarme1: false, alarme2: false, alarme3: false });
     } catch (error) {
       setMsg("❌ Erro ao desativar alarmes");
       console.error(error);

@@ -67,7 +67,7 @@ function chamarApi() {
           className={styles.panda}
         />
 </button>
-      <Clock dbUrl="http://localhost:3000/User" /> 
+      <Clock /> 
 
   
 
