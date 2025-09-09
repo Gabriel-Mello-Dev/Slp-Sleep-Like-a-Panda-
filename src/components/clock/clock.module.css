@@ -40,3 +40,34 @@
 .stopButton:hover {
   background-color: #e60000;
 }
+
+.nextAlarm {
+  font-size: 24px;
+  font-weight: bold;
+  display: inline-block;
+  padding: 10px;
+}
+
+.nextAlarm span {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.nextAlarm:hover span {
+  animation: wave 0.6s ease forwards;
+}
+
+.nextAlarm:hover span:nth-child(1)  { animation-delay: 0s; }
+.nextAlarm:hover span:nth-child(2)  { animation-delay: 0.05s; }
+.nextAlarm:hover span:nth-child(3)  { animation-delay: 0.1s; }
+.nextAlarm:hover span:nth-child(4)  { animation-delay: 0.15s; }
+.nextAlarm:hover span:nth-child(5)  { animation-delay: 0.2s; }
+.nextAlarm:hover span:nth-child(6)  { animation-delay: 0.25s; }
+.nextAlarm:hover span:nth-child(7)  { animation-delay: 0.3s; }
+
+@keyframes wave {
+  0%   { transform: translateY(0); }
+  30%  { transform: translateY(-8px); }
+  60%  { transform: translateY(8px); }
+  100% { transform: translateY(0); }
+}

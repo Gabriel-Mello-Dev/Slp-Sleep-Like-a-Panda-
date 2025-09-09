@@ -69,13 +69,7 @@ function chamarApi() {
 </button>
       <Clock dbUrl="http://localhost:3000/User" /> 
 
-<p className={styles.nextAlarm}>
-    <p>Proximo </p>
-
-  {" Alarme".split("").map((char, i) => (
-    <span key={i}>{char}</span>
-  ))}
-</p>     
+  
 
  </div>
 

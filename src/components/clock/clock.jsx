@@ -9,7 +9,7 @@ const Clock = ({ dbUrl, checkInterval = 2000 }) => {
   const audioRef = useRef(null);
   const [alarmPlaying, setAlarmPlaying] = useState(false);
   const [alarmType, setAlarmType] = useState(1); 
-
+const [msg,setMsg]= useState(false);
   // carrega som quando o tipo muda
   useEffect(() => {
     if (audioRef.current) {
@@ -56,6 +56,7 @@ const Clock = ({ dbUrl, checkInterval = 2000 }) => {
           }
 
           setAlarmPlaying(false);
+          setMsg(false);
           return;
         }
 
@@ -75,6 +76,8 @@ const Clock = ({ dbUrl, checkInterval = 2000 }) => {
     if (timeLeft === 0 && dbLastValue.current > 0 && !alarmPlaying) {
       if (audioRef.current) audioRef.current.play().catch(() => {});
       setAlarmPlaying(true);
+                setMsg(true);
+
     }
   }, [timeLeft, alarmPlaying]);
 
@@ -84,6 +87,8 @@ const Clock = ({ dbUrl, checkInterval = 2000 }) => {
       audioRef.current.currentTime = 0;
     }
     setAlarmPlaying(false);
+              setMsg(false);
+
     setTimeLeft(dbLastValue.current);
   };
 
@@ -94,6 +99,7 @@ const Clock = ({ dbUrl, checkInterval = 2000 }) => {
   };
 
   return (
+    <> 
     <div className={styles.clock}>
       {formatTime(timeLeft)}
       <br />
@@ -102,7 +108,25 @@ const Clock = ({ dbUrl, checkInterval = 2000 }) => {
           ⏹️ Parar Alarme
         </button>
       )}
+
+
+      
     </div>
+   {msg ? (
+
+
+  <p>Saia para tomar uma água!🚰</p>
+
+) : (
+    <div className={styles.nextAlarm}>
+    <div>Proximo </div>
+    {" Alarme".split("").map((char, i) => (
+      <span key={i}>{char}</span>
+    ))}
+  </div>
+)}
+
+</>
   );
 };
 
