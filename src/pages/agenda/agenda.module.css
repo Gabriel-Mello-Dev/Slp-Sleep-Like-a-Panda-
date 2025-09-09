@@ -1,0 +1,67 @@
+.agendaContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.daysGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.dayBlock {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dayBlock:hover {
+  background-color: #f0f0f0;
+}
+
+.selected {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+}
+
+.alarmContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.timeInput {
+  padding: 5px;
+  font-size: 16px;
+}
+
+.saveButton {
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  transition: 0.2s;
+}
+
+.saveButton:hover {
+  background-color: #0056b3;
+}
+
+.selectedText {
+  margin-top: 20px;
+  font-weight: bold;
+}
