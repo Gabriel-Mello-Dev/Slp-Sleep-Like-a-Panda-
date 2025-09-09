@@ -42,8 +42,11 @@ const Head = () => {
       <nav className={styles.nav}>
         <Link to="/">Home</Link>
         <Link to="/alarmes">Alarmes</Link>
+        <Link to="/ModoSono">Modo Noturno</Link>
         <Link to="/agenda">Agenda</Link>
         <Link to="/loja">Loja</Link>
+        <Link to="/sobrenos">Sobre-Nós</Link>
+
       </nav>
 
       {/* Botões */}
