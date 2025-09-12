@@ -7,7 +7,7 @@
   padding: 2rem;
   background-color: #7a7a7a;
   color: #454546;
-
+height: 50Vw;
   /* efeito de fade-in geral */
   animation: fadeIn 1s ease-in-out;
 }

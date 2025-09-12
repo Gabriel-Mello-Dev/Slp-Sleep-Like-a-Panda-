@@ -2,16 +2,15 @@ import { useEffect, useState, useRef } from "react";
 import styles from "./clock.module.css";
 import { api } from "../../services";
 
-const Clock = ({ checkInterval = 2000 }) => {
-  const savedTime = localStorage.getItem("tempo");
-  const [timeLeft, setTimeLeft] = useState(savedTime ? Number(savedTime) : 0);
-  const dbLastValue = useRef(null);
+const Clock = ({ checkInterval = 5000 }) => {
+  const userId = localStorage.getItem("userId");
+  const [timeLeft, setTimeLeft] = useState(0);
+  const dbLastValue = useRef(0);
   const audioRef = useRef(null);
   const [alarmPlaying, setAlarmPlaying] = useState(false);
-  const [alarmType, setAlarmType] = useState(1); 
-  const [msg, setMsg] = useState(false);
+  const [alarmType, setAlarmType] = useState(1);
 
-  // Configura o som do alarme
+  // Configura som do alarme
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.pause();
@@ -26,67 +25,76 @@ const Clock = ({ checkInterval = 2000 }) => {
     audioRef.current.loop = true;
   }, [alarmType]);
 
-  // Countdown
+  // Countdown local
   useEffect(() => {
-    if (timeLeft <= 0) return;
-
     const timer = setInterval(() => {
-      setTimeLeft(prev => Math.max(prev - 1, 0));
+      setTimeLeft(prev => (prev > 0 ? prev - 1 : 0));
     }, 1000);
-
     return () => clearInterval(timer);
+  }, []);
+
+  // Salva no localStorage
+  useEffect(() => {
+    localStorage.setItem("tempo", timeLeft);
   }, [timeLeft]);
 
-  // Polling do DB usando api
+  // Zera tempo quando o usuário desloga
   useEffect(() => {
-    const interval = setInterval(async () => {
+    if (!userId) {
+      setTimeLeft(0);
+      dbLastValue.current = 0;
+      setAlarmPlaying(false);
+    }
+  }, [userId]);
+
+  // Polling do DB
+  useEffect(() => {
+    if (!userId) return;
+
+    const fetchUserTempo = async () => {
       try {
-        const res = await api.get(""); // usa a baseURL do api.js
-        const dbValue = Number(res.data.tempo.horario);
-        const dbType = Number(res.data.tempo.tipo);
+        const res = await api.get(`/tempos?userId=${userId}`);
+        if (res.data.length === 0) return;
 
-        dbLastValue.current = dbValue;
-        setAlarmType(dbType);
+        const userTempo = res.data[0];
+        const dbValue = Number(userTempo.horario);
+        const dbType = Number(userTempo.tipo);
 
-        if (dbValue === 0) {
-          setTimeLeft(0);
-          if (audioRef.current) {
-            audioRef.current.pause();
-            audioRef.current.currentTime = 0;
-          }
-          setAlarmPlaying(false);
-          setMsg(false);
-          return;
-        }
-
-        if (dbValue > 0 && dbValue !== timeLeft) {
-          setTimeLeft(dbValue);
+        // Atualiza apenas se mudou
+        if (dbValue !== dbLastValue.current) {
+          dbLastValue.current = dbValue;
+          setAlarmType(dbType);
+          setTimeLeft(dbValue * 60);
         }
       } catch (err) {
         console.error("Erro ao buscar tempo do DB:", err);
       }
-    }, checkInterval);
+    };
+
+    // Puxa imediatamente
+    fetchUserTempo();
+    // E depois periodicamente
+    const interval = setInterval(fetchUserTempo, checkInterval);
 
     return () => clearInterval(interval);
-  }, [checkInterval, timeLeft]);
+  }, [checkInterval, userId]);
 
-  // toca alarme quando chega a 0
+  // Toca alarme quando chega a 0
   useEffect(() => {
     if (timeLeft === 0 && dbLastValue.current > 0 && !alarmPlaying) {
       if (audioRef.current) audioRef.current.play().catch(() => {});
       setAlarmPlaying(true);
-      setMsg(true);
     }
   }, [timeLeft, alarmPlaying]);
 
+  // Para o alarme
   const stopAlarm = () => {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
     setAlarmPlaying(false);
-    setMsg(false);
-    setTimeLeft(dbLastValue.current);
+    setTimeLeft(dbLastValue.current * 60);
   };
 
   const formatTime = seconds => {
@@ -96,7 +104,7 @@ const Clock = ({ checkInterval = 2000 }) => {
   };
 
   return (
-    <> 
+    <>
       <div className={styles.clock}>
         {formatTime(timeLeft)}
         <br />
@@ -106,12 +114,13 @@ const Clock = ({ checkInterval = 2000 }) => {
           </button>
         )}
       </div>
-      {msg ? (
-        <p>Saia para tomar uma água!🚰</p>
+
+      {alarmPlaying ? (
+        <p>Saia para tomar uma água! 🚰</p>
       ) : (
         <div className={styles.nextAlarm}>
-          <div>Proximo </div>
-          {" Alarme".split("").map((char, i) => (
+          <div>Próximo </div>
+          {"Alarme".split("").map((char, i) => (
             <span key={i}>{char}</span>
           ))}
         </div>

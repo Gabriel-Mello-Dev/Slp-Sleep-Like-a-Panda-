@@ -1,79 +1,68 @@
 import { useEffect, useState } from "react";
 import styles from "./home.module.css";
 import { Clock } from "../../components";
-import axios from "axios";
+import { api } from "../../services";
 
-const Inicial = () => {
-  const [seconds, setSeconds] = useState(null);
-const [teste,setTeste]= useState(null);
-const [show,setShow]= useState(false);
+export const Inicial = () => {
+  const [skinPanda, setSkinPanda] = useState(""); // Panda atual
+  const [showRain, setShowRain] = useState(false); // Mostra chuva de pandas
+  const userId = localStorage.getItem("userId");   // ID do usuário logado
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/tempo")
-      .then((res) => setSeconds(res.data.horario))
-      .catch((err) => console.error("Erro ao carregar tempo:", err));
-  }, []);
-
-  const stopAllSounds = () => {
-    const audios = document.querySelectorAll("audio");
-    audios.forEach((audio) => {
-      audio.pause();
-      audio.currentTime = 0; // volta para o início
-    });
+  // Mapeamento das skins para URLs
+  const skinsMap = {
+    gratis: "/pandaClock.png",
+    ninja: "https://png.pngtree.com/png-clipart/20230423/original/pngtree-the-panda-character-as-a-shaolin-warrior-carrying-a-bamboo-stick-png-image_9076894.png",
+    robo: "https://png.pngtree.com/png-vector/20250803/ourmid/pngtree-panda-robot-drawing-illustration-vector-png-image_16821857.webp",
+    dj: "https://cdn.pixabay.com/photo/2023/09/24/10/12/ai-generated-8272508_1280.png",
+    zen: "https://png.pngtree.com/png-clipart/20250501/original/pngtree-peaceful-zen-panda-sitting-in-a-serene-yoga-pose-png-image_20924858.png",
   };
-function chamarApi() {
-  axios
-    .get("http://localhost:3000/User")
-    .then((res) => {
-      const user = res.data; // já é o objeto User
-      setTeste(user);
 
-      alert(`Nome: ${user.nome}, Horário: ${user.tempo.horario}`);
-    })
-    .catch((err) => console.error("Erro ao carregar:", err));
-}
+  // Busca skin equipada do usuário
+  useEffect(() => {
+    if (!userId) {
+      setSkinPanda(skinsMap.gratis); // Panda inicial grátis
+      return;
+    }
 
+    const fetchUser = async () => {
+      try {
+        const res = await api.get(`/users/${userId}`);
+        const skinEquipada = res.data.skinEquipada || "gratis";
+        setSkinPanda(skinsMap[skinEquipada] || skinsMap.gratis);
+      } catch (err) {
+        console.error("Erro ao buscar skin do usuário:", err);
+        setSkinPanda(skinsMap.gratis);
+      }
+    };
+
+    fetchUser();
+  }, [userId]);
+
+  // Alterna chuva de pandas
+  const toggleRain = () => setShowRain(prev => !prev);
 
   return (
-
-
-
     <div className={styles.container}>
-      {/* Título */}
-
-      
-   {show && (
-    <> 
- <div className={styles.rain}>
-      {Array.from({ length: 20 }).map((_, i) => (
-        <span key={i}>🐼</span>
-      ))}
-    </div>
-
-        </>
+      {/* Chuva de pandas */}
+      {showRain && (
+        <div className={styles.rain}>
+          {Array.from({ length: 20 }).map((_, i) => (
+            <span key={i}>🐼</span>
+          ))}
+        </div>
       )}
 
+      {/* Título */}
       <h1 className={styles.title}>Sleep Like a Panda</h1>
-
-
 
       {/* Panda com relógio */}
       <div className={styles.pandaSection}>
-         <button onClick={() => setShow(!show)}  className={styles.effect}>
-        <img
-          src="../../pandaClock.png"
-          alt="Panda Clock"
-          className={styles.panda}
-        />
-</button>
-      <Clock /> 
+        <button onClick={toggleRain} className={styles.transparentButton}>
+          <img src={skinPanda} alt="Panda Clock" className={styles.panda} />
+        </button>
+        <Clock />
+      </div>
 
-  
-
- </div>
-
-     
       {/* Panda na Lua */}
       <img
         src="https://png.pngtree.com/png-clipart/20220102/original/pngtree-adorable-baby-panda-sleeping-illustration-in-watercolor-png-image_6995799.png"
@@ -96,10 +85,6 @@ function chamarApi() {
           alt="Bambu"
         />
       </div>
-
-
     </div>
   );
 };
-
-export { Inicial };

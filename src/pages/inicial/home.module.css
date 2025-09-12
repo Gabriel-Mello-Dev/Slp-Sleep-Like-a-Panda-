@@ -60,6 +60,14 @@ border: none;
 cursor:pointer;
 
    }
+
+.effect{
+background-color: #00000000;
+border: none;
+cursor:pointer;
+
+   }
+
 .moonPanda:hover {
  transform: rotate(360deg);
  transition: ease-in-out 2s;
@@ -129,6 +137,23 @@ body {
   height: 100%;
   background-color: #bfbfbf;
 }
+
+.transparentButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+}
+
+.transparentButton:hover {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+}
+
 
 /* PandaRain.module.css */
 .rain {

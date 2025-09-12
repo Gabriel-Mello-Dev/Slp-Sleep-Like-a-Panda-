@@ -1,9 +1,58 @@
 {
-  "User": {
-    "nome": "oi",
-    "tempo": {
-      "horario": 0,
-      "tipo": 0
+  "users": [
+    {
+      "id": 1,
+      "nome": "Gabriel",
+      "email": "gabriel@email.com",
+      "senha": "123",
+      "skinEquipada": "gratis",
+      "skinsCompradas": [
+        "gratis"
+      ]
+    },
+    {
+      "id": "013c",
+      "nome": "roger",
+      "email": "roger@a",
+      "senha": "123",
+      "tempo": {
+        "horario": 0,
+        "tipo": 1
+      },
+      "skinsCompradas": [
+        "gratis",
+        "ninja",
+        "robo",
+        "zen",
+        "dj"
+      ],
+      "skinEquipada": "dj"
+    },
+    {
+      "id": "40ee",
+      "nome": "gabriel",
+      "email": "Gabriel@1",
+      "senha": "123",
+      "skinEquipada": "gratis",
+      "skinsCompradas": [
+        "gratis",
+        "ninja",
+        "zen"
+      ]
     }
-  }
+  ],
+  "tempos": [
+    {
+      "id": 1,
+      "userId": 1,
+      "horario": 0,
+      "tipo": 1
+    },
+    {
+      "id": "ecc5",
+      "userId": null,
+      "horario": 2,
+      "tipo": 1
+    }
+  ]
 }
