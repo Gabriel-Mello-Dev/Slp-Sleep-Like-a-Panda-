@@ -23,7 +23,16 @@ export default function Signup() {
         return;
       }
 
+      // 🔎 Pega todos os usuários para calcular o próximo ID numérico
+      const allUsers = await api.get("/users");
+      let nextId = 1;
+      if (allUsers.data.length > 0) {
+        const ids = allUsers.data.map(u => Number(u.id));
+        nextId = Math.max(...ids) + 1;
+      }
+
       const user = await api.post("/users", {
+        id: nextId,       // 👈 garante que seja number sequencial
         nome,
         email,
         senha,
