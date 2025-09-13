@@ -25,7 +25,7 @@ const Alarmes = () => {
         if (res.data.length > 0) {
           const userTempo = res.data[0];
           setTempo(userTempo.horario || "");
-          setTempoId(userTempo.id);
+          setTempoId(Number(userTempo.id)); // garante number
           setChecks({
             alarme1: userTempo.tipo === 1,
             alarme2: userTempo.tipo === 2,
@@ -68,16 +68,24 @@ const Alarmes = () => {
         // Já existe → atualizar
         const userTempo = res.data[0];
         await api.put(`/tempos/${userTempo.id}`, {
-          id: userTempo.id,
+          id: Number(userTempo.id),
           userId,
           horario: Number(tempo),
           tipo,
         });
-        setTempoId(userTempo.id);
+        setTempoId(Number(userTempo.id));
         setMsg(`✅ Alarme ${tipo} atualizado com sucesso!`);
       } else {
         // Não existe → criar
+        const allTempos = await api.get("/tempos");
+        let nextId = 1;
+        if (allTempos.data.length > 0) {
+          const ids = allTempos.data.map((t) => Number(t.id));
+          nextId = Math.max(...ids) + 1;
+        }
+
         const newTempo = await api.post("/tempos", {
+          id: nextId, // 👈 força id numérico sequencial
           userId,
           horario: Number(tempo),
           tipo,
