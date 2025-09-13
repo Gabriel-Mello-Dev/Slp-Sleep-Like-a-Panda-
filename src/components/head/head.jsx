@@ -34,7 +34,7 @@ const Head = () => {
       {/* Logo */}
       <div className={styles.logo}>
         {clicked ? (
-          <button onClick={handleClick} className={styles.effect}>
+          <button onClick={handleClick} className={styles.transparentButton}>
             <img
               src="/cute.gif"
               alt="Panda Acordado"
@@ -42,7 +42,7 @@ const Head = () => {
             />
           </button>
         ) : (
-          <button onClick={handleClick} className={styles.effect}>
+          <button onClick={handleClick} className={styles.transparentButton}>
             <img
               src="https://juststickers.in/wp-content/uploads/2021/01/sleeping-panda.png"
               alt="Panda Dormindo"
