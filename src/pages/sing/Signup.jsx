@@ -10,45 +10,45 @@ export default function Signup() {
   const [senha, setSenha] = useState("");
   const [msg, setMsg] = useState("");
 
-  const criarConta = async () => {
-    if (!nome || !email || !senha) {
-      setMsg("⚠️ Preencha todos os campos");
+const criarConta = async () => {
+  if (!nome || !email || !senha) {
+    setMsg("⚠️ Preencha todos os campos");
+    return;
+  }
+
+  try {
+    const res = await api.get(`/users?email=${email}`);
+    if (res.data.length > 0) {
+      setMsg("⚠️ Usuário já existe");
       return;
     }
 
-    try {
-      const res = await api.get(`/users?email=${email}`);
-      if (res.data.length > 0) {
-        setMsg("⚠️ Usuário já existe");
-        return;
-      }
-
-      // 🔎 Pega todos os usuários para calcular o próximo ID numérico
-      const allUsers = await api.get("/users");
-      let nextId = 1;
-      if (allUsers.data.length > 0) {
-        const ids = allUsers.data.map(u => Number(u.id));
-        nextId = Math.max(...ids) + 1;
-      }
-
-      const user = await api.post("/users", {
-        id: nextId,       // 👈 garante que seja number sequencial
-        nome,
-        email,
-        senha,
-        skinEquipada: "gratis",
-        skinsCompradas: ["gratis"]
-      });
-
-      localStorage.setItem("userId", user.data.id);
-      setMsg("✅ Conta criada com sucesso!");
-      setNome(""); setEmail(""); setSenha("");
-      navigate("/"); // vai para home logado
-    } catch (error) {
-      console.error(error);
-      setMsg("❌ Erro ao criar conta");
+    // Pega todos os usuários para calcular próximo ID
+    const allUsers = await api.get("/users");
+    let nextId = 1;
+    if (allUsers.data.length > 0) {
+      const ids = allUsers.data.map(u => parseInt(u.id, 10)); // transforma string em number
+      nextId = Math.max(...ids) + 1;
     }
-  };
+
+    const user = await api.post("/users", {
+      id: String(nextId), // salva como string no db
+      nome,
+      email,
+      senha,
+      skinEquipada: "gratis",
+      skinsCompradas: ["gratis"]
+    });
+
+    localStorage.setItem("userId", user.data.id);
+    setMsg("✅ Conta criada com sucesso!");
+    setNome(""); setEmail(""); setSenha("");
+    navigate("/"); // vai para home logado
+  } catch (error) {
+    console.error(error);
+    setMsg("❌ Erro ao criar conta");
+  }
+};
 
   return (
     <div className={styles.container}>
