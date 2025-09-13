@@ -1,77 +1,59 @@
 {
   "users": [
     {
-      "id": "1",
+      "id": 1,
       "nome": "Gabriel",
       "email": "gabriel@email.com",
       "senha": "123",
       "skinEquipada": "gratis",
-      "skinsCompradas": [
-        "gratis"
-      ]
+      "skinsCompradas": ["gratis"]
     },
     {
-      "id": "2",
+      "id": 2,
       "nome": "roger",
       "email": "roger@a",
       "senha": "123",
-      "tempo": {
-        "horario": 0,
-        "tipo": 1
-      },
-      "skinsCompradas": [
-        "gratis",
-        "ninja",
-        "robo",
-        "zen",
-        "dj"
-      ],
-      "skinEquipada": "dj"
+      "skinEquipada": "dj",
+      "skinsCompradas": ["gratis", "ninja", "robo", "zen", "dj"]
     },
     {
-      "id": "3",
+      "id": 3,
       "nome": "gabriel",
       "email": "Gabriel@1",
       "senha": "123",
       "skinEquipada": "gratis",
-      "skinsCompradas": [
-        "gratis",
-        "ninja",
-        "zen"
-      ]
+      "skinsCompradas": ["gratis", "ninja", "zen"]
     },
     {
-      "id": "4",
+      "id": 4,
       "nome": "francisco",
       "email": "123@a",
       "senha": "123",
       "skinEquipada": "gratis",
-      "skinsCompradas": [
-        "gratis"
-      ]
+      "skinsCompradas": ["gratis"]
     }
   ],
   "tempos": [
     {
-      "id": "1",
+      "id": 1,
       "userId": 1,
       "horario": 0,
       "tipo": 1
     },
     {
-      "id": "2",
+      "id": 2,
       "userId": 2,
       "horario": 10,
       "tipo": 1
     },
     {
-      "id": "1f90",
-      "userId": 9,
+      "id": 3,
+      "userId": 3,
       "horario": 2,
       "tipo": 1
     },
     {
-      "id": "423c",
+      "id": 4,
       "userId": 4,
       "horario": 1,
       "tipo": 2
