@@ -12,7 +12,9 @@ const Alarmes = () => {
   });
   const [tempoId, setTempoId] = useState(null);
 
-  const userId = localStorage.getItem("userId");
+  // 🔑 Pega o userId do localStorage e garante que seja number
+  const rawUserId = localStorage.getItem("userId");
+  const userId = rawUserId ? parseInt(rawUserId, 10) : null;
 
   // Busca o tempo do usuário
   useEffect(() => {
@@ -60,25 +62,30 @@ const Alarmes = () => {
     }
 
     try {
-      if (tempoId) {
-        // Atualiza o tempo existente
-        await api.put(`/tempos/${tempoId}`, {
-          id: tempoId,           // json-server precisa do id
-          userId: Number(userId),
+      // 🔎 Verifica se já existe um tempo cadastrado pra esse usuário
+      const res = await api.get(`/tempos?userId=${userId}`);
+      if (res.data.length > 0) {
+        // Já existe → atualizar
+        const userTempo = res.data[0];
+        await api.put(`/tempos/${userTempo.id}`, {
+          id: userTempo.id,
+          userId,
           horario: Number(tempo),
-          tipo
+          tipo,
         });
+        setTempoId(userTempo.id);
         setMsg(`✅ Alarme ${tipo} atualizado com sucesso!`);
       } else {
-        // Cria um novo tempo
-        const res = await api.post("/tempos", {
-          userId: Number(userId),
+        // Não existe → criar
+        const newTempo = await api.post("/tempos", {
+          userId,
           horario: Number(tempo),
-          tipo
+          tipo,
         });
-        setTempoId(res.data.id); // salva o ID do tempo criado
+        setTempoId(newTempo.data.id);
         setMsg(`✅ Alarme ${tipo} criado com sucesso!`);
       }
+
       setTempo("");
     } catch (error) {
       setMsg("❌ Erro ao salvar tempo");
@@ -86,6 +93,7 @@ const Alarmes = () => {
     }
   };
 
+  // Desativar alarmes
   const desativarAlarmes = async () => {
     if (!tempoId) {
       setMsg("⚠️ Nenhum alarme ativo para desativar");
@@ -94,10 +102,10 @@ const Alarmes = () => {
 
     try {
       await api.put(`/tempos/${tempoId}`, {
-        id: tempoId,          // necessário para json-server
-        userId: Number(userId),
+        id: tempoId,
+        userId,
         horario: 0,
-        tipo: 0
+        tipo: 0,
       });
       setMsg("⏹️ Alarmes desativados!");
       setTempo("");
@@ -113,7 +121,13 @@ const Alarmes = () => {
       <h2 className={styles.title}>Configurar Alarme</h2>
 
       {msg && (
-        <p className={msg.includes("✅") || msg.includes("⏹️") ? styles.success : styles.error}>
+        <p
+          className={
+            msg.includes("✅") || msg.includes("⏹️")
+              ? styles.success
+              : styles.error
+          }
+        >
           {msg}
         </p>
       )}

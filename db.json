@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "nome": "Gabriel",
       "email": "gabriel@email.com",
       "senha": "123",
@@ -11,7 +11,7 @@
       ]
     },
     {
-      "id": "013c",
+      "id": "2",
       "nome": "roger",
       "email": "roger@a",
       "senha": "123",
@@ -29,7 +29,7 @@
       "skinEquipada": "dj"
     },
     {
-      "id": "40ee",
+      "id": "3",
       "nome": "gabriel",
       "email": "Gabriel@1",
       "senha": "123",
@@ -39,20 +39,42 @@
         "ninja",
         "zen"
       ]
+    },
+    {
+      "id": "4",
+      "nome": "francisco",
+      "email": "123@a",
+      "senha": "123",
+      "skinEquipada": "gratis",
+      "skinsCompradas": [
+        "gratis"
+      ]
     }
   ],
   "tempos": [
     {
-      "id": 1,
+      "id": "1",
       "userId": 1,
       "horario": 0,
       "tipo": 1
     },
     {
-      "id": "ecc5",
-      "userId": null,
+      "id": "2",
+      "userId": 2,
+      "horario": 10,
+      "tipo": 1
+    },
+    {
+      "id": "1f90",
+      "userId": 9,
       "horario": 2,
       "tipo": 1
+    },
+    {
+      "id": "423c",
+      "userId": 4,
+      "horario": 1,
+      "tipo": 2
     }
   ]
 }
