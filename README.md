@@ -6,8 +6,9 @@
 
 *Durma Melhor, Viva de Forma Mais Inteligente, Acorde Revigorado*
 
-Construído com as seguintes ferramentas e tecnologias: **JSON, Markdown, npm, JavaScript, React, Vite, ESLint, Axios**    
-![SLP-banner](/src/assets/slpBanner.png)  
+Construído com as seguintes ferramentas e tecnologias: **JSON, Markdown, npm, JavaScript, React, Vite, ESLint, Axios**  
+  
+![SLP-banner](/src/assets/slpBanner.jpg)  
 
 ---
 
