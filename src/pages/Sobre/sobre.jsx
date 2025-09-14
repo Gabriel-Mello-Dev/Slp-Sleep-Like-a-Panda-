@@ -27,6 +27,8 @@ const Sobre = () => {
           <li>Francisco Felipe da Silva</li>
         </ul>
       </div>
+
+      <img src="/slp.png" alt="" />
     </div>
   )
 }
