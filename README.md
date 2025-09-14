@@ -12,66 +12,102 @@ Construído com as seguintes ferramentas e tecnologias/Built using the following
 
 ---
 
-## 📖 Visão Geral/General concept
+## 📖 General concept/Visão Geral
+
+### 🚨 Target problem/Problema abordado  
+
+O problema com o qual queremos lidar, é a falta de controle sobre o sono. Em tempos de tamanha ansiedade e preocupação presentes em nossa sociedade, cuidar de nosso sono, recarregar nossas baterias, é essencal, porém mais complicado do que nunca.  
+
+## 💡 Solution/Solução  
+
+A solução que elaboramos para resolver o problema, foi criar uma aplicação que permita aos usuários definir ***alarmes*** em ***horários e datas específicos***, controlando mais fácilmente seu ciclo de sono e tendo um ***ambiente mais interativo*** do que o dos despertadores virtuais tradicionais.
+
+### 🚀 Why SLP-Sleep-Like-a-Panda/Por que SLP-Sleep-Like-a-Panda?  
+
+Queremos fornecer uma plataforma **confiável e amigável** com **atualizações em tempo real** e **navegação fluida**.  
 
 **SLP-Sleep-Like-a-Panda-** é uma aplicação web moderna baseada em React, projetada para oferecer uma experiência suave e envolvente no gerenciamento de sono e alarmes.
-Com foco em **manutenibilidade e escalabilidade**, utiliza **Vite** para desenvolvimento rápido e uma arquitetura modular que simplifica fluxos de trabalho complexos no frontend.
+Com foco em **manutenibilidade e escalabilidade**, utiliza **Vite** para desenvolvimento rápido e uma arquitetura modular que simplifica fluxos de trabalho complexos no frontend.  
 
-### 🚀 Por que SLP-Sleep-Like-a-Panda/Why SLP-Sleep-Like-a-Panda?
+### 🧱 Main features/Principais funcionalidades  
 
-O objetivo do projeto é fornecer uma plataforma **confiável e amigável** com **atualizações em tempo real** e **navegação fluida**.
+* 🛠️ **ESLint configuration/Configuração ESLint:** garante qualidade de código e boas práticas.
+* ⚡ **Vite + React configuration/Configuração Vite + React:** builds rápidos, HMR e desenvolvimento otimizado.
+* 🧩 **Modular architecture/Arquitetura Modular:** organização de rotas, layouts e componentes.
+* ⏱️ **Real time clock/Relógio em Tempo Real:** sincronizado com banco de dados remoto para contagens regressivas e alarmes.
+* 🔗 **Centralized context & API/Contexto & API Centralizados:** fluxo de dados eficiente e comunicação backend.
+* 🎨 **Customizable UI components/Componentes de UI Personalizáveis:** consistência visual e interações aprimoradas.  
 
-**Principais funcionalidades/Main features:**
+### 👥 Project members/Membros do projeto  
 
-* 🛠️ **Configuração ESLint/ESLint configuration:** garante qualidade de código e boas práticas.
-* ⚡ **Configuração Vite + React/Vite + React configuration:** builds rápidos, HMR e desenvolvimento otimizado.
-* 🧩 **Arquitetura Modular/Modular architecture:** organização de rotas, layouts e componentes.
-* ⏱️ **Relógio em Tempo Real/Real time clock:** sincronizado com banco de dados remoto para contagens regressivas e alarmes.
-* 🔗 **Contexto & API Centralizados/Centralized context & API:** fluxo de dados eficiente e comunicação backend.
-* 🎨 **Componentes de UI Personalizáveis/Customizable UI components:** consistência visual e interações aprimoradas.
+Os **integrantes** deste projeto são os alunos:  
+* Celso Fischer Neto
+* Francisco Felipe da Silva
+* Gabriel de Oliveira Mello
 
----
+### 🏫 Our institution/Nossa instituição  
 
-## 🛠️ Primeiros Passos/First steps
+Todos os integrantes deste projeto são estudantes do **Centro Paula Souza**, na **ETEC Jacinto Ferreira de Sá, em Ourinhos, São Paulo.**
 
-### 📌 Pré-requisitos/Requirements
+### 📧 Contact/Contato  
+
+Podemos ser contatados através do email **gabrielmello8986@gmail.com**.  
+
+---  
+
+## 🛠️ Contributing/Contribuindo  
+
+### 🔗 Submiting a PullRequest/Enviando um PullRequest  
+
+* 📍 Busque ser **objetivo** e escolha **nomes claros e simples** para as alterações.
+* 📃 Procure manter o projeto e mudanças **bem documentados**.
+* ⌛️ Devido ao tamanho da equipe, podemos levar algum **tempo** para **analisar, aceitar e/ou dar devolutivas** sobre cada PullRequest.
+
+### 📩 Other suggestions/Outras sugestões  
+
+* 🗣 Qualquer tipo de **sugestão**, **conselho**, sobre qualquer forma de **melhoria** do projeto e **feedback**, serão muito bem vindos.
+* 📧 Pode-se usar o Email **gabrielmello8986@gmail.com** para enviar tais sugestões.
+
+---  
+
+## ☁️ Hosted project link/Link do projeto hospedado  
+
+O link para o projeto já hospedado na plataforma Vercel é: https://slp-sleep-like-a-panda.vercel.app/ .  
+
+---  
+
+## 🪛 First steps(locally running the project)/Primeiros Passos(rodando o projeto localmente)
+
+### 📌 Requirements/Pré-requisitos
 
 Este projeto requer as seguintes dependências:
 
-* **Linguagem de Programação/Programming language:** JavaScript
-* **Gerenciador de Pacotes/Packacge manager:** npm
+* **Programming language/Linguagem de Programação:** JavaScript
+* **Package manager/Gerenciador de Pacotes:** npm
+* **NodeJS version/Versão do NodeJS:** NodeJS **v22.14.0**
 
-### ⚙️ Instalação/Installing
+### ⚙️ Installing/Instalação
 
 Construa o projeto a partir do código-fonte e instale as dependências:
 
 ```sh
-# Clonar o repositório/Cloning the repository
+# Cloning the repository/Clonar o repositório
 git clone https://github.com/Gabriel-Mello-Dev/Slp-Sleep-Like-a-Panda-
 
-# Entrar no diretório do projeto/Entering the project directory
+# Entering the project directory/Entrar no diretório do projeto
 cd Slp-Sleep-Like-a-Panda-
 
-# Instalar dependências/Installing dependencies
+# Installing dependencies/Instalar dependências
 npm install
 ```
 
-### ▶️ Uso/Use
+### 🛫 Running the project/Rodando o projeto 
 
-Rodar o projeto/Run project:
-
-```sh
-npm start
-```
-
-### 🧪 Testes/Tests
-
-O projeto utiliza o framework de testes **{test\_framework}**. Para rodar os testes:
+Para **rodar o projeto de forma local**, basta executar os comandos a seguir, após ter copiado o projeto, navegado para o diretório correto e instalado as dependências.
 
 ```sh
-npm test
+# Running the project/Rodando o projeto localmente
+npm run dev
 ```
-
-
 
 ---
