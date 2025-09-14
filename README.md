@@ -6,42 +6,42 @@
 
 *Durma Melhor, Viva de Forma Mais Inteligente, Acorde Revigorado*
 
-Construído com as seguintes ferramentas e tecnologias: **JSON, Markdown, npm, JavaScript, React, Vite, ESLint, Axios**  
+Construído com as seguintes ferramentas e tecnologias/Built using the following tools and technologies: **JSON, Markdown, npm, JavaScript, React, Vite, ESLint, Axios**  
   
 ![SLP-banner](/src/assets/slpBanner.jpg)  
 
 ---
 
-## 📖 Visão Geral
+## 📖 Visão Geral/General concept
 
-**Slp-Sleep-Like-a-Panda-** é uma aplicação web moderna baseada em React, projetada para oferecer uma experiência suave e envolvente no gerenciamento de sono e alarmes.
+**SLP-Sleep-Like-a-Panda-** é uma aplicação web moderna baseada em React, projetada para oferecer uma experiência suave e envolvente no gerenciamento de sono e alarmes.
 Com foco em **manutenibilidade e escalabilidade**, utiliza **Vite** para desenvolvimento rápido e uma arquitetura modular que simplifica fluxos de trabalho complexos no frontend.
 
-### 🚀 Por que Slp-Sleep-Like-a-Panda-?
+### 🚀 Por que SLP-Sleep-Like-a-Panda/Why SLP-Sleep-Like-a-Panda-?
 
 O objetivo do projeto é fornecer uma plataforma **confiável e amigável** com **atualizações em tempo real** e **navegação fluida**.
 
-**Principais funcionalidades:**
+**Principais funcionalidades/Main features:**
 
-* 🛠️ **Configuração ESLint:** garante qualidade de código e boas práticas.
-* ⚡ **Configuração Vite + React:** builds rápidos, HMR e desenvolvimento otimizado.
-* 🧩 **Arquitetura Modular:** organização de rotas, layouts e componentes.
-* ⏱️ **Relógio em Tempo Real:** sincronizado com banco de dados remoto para contagens regressivas e alarmes.
-* 🔗 **Contexto & API Centralizados:** fluxo de dados eficiente e comunicação backend.
-* 🎨 **Componentes de UI Personalizáveis:** consistência visual e interações aprimoradas.
+* 🛠️ **Configuração ESLint/ESLint configuration:** garante qualidade de código e boas práticas.
+* ⚡ **Configuração Vite + React/Vite + React configuration:** builds rápidos, HMR e desenvolvimento otimizado.
+* 🧩 **Arquitetura Modular/Modular architecture:** organização de rotas, layouts e componentes.
+* ⏱️ **Relógio em Tempo Real/Real time clock:** sincronizado com banco de dados remoto para contagens regressivas e alarmes.
+* 🔗 **Contexto & API Centralizados/Centralized context & API:** fluxo de dados eficiente e comunicação backend.
+* 🎨 **Componentes de UI Personalizáveis/Customizable UI components:** consistência visual e interações aprimoradas.
 
 ---
 
-## 🛠️ Primeiros Passos
+## 🛠️ Primeiros Passos/First steps
 
-### 📌 Pré-requisitos
+### 📌 Pré-requisitos/Requirements
 
 Este projeto requer as seguintes dependências:
 
-* **Linguagem de Programação:** JavaScript
-* **Gerenciador de Pacotes:** npm
+* **Linguagem de Programação/Programming language:** JavaScript
+* **Gerenciador de Pacotes/Packacge manager:** npm
 
-### ⚙️ Instalação
+### ⚙️ Instalação/Installing
 
 Construa o projeto a partir do código-fonte e instale as dependências:
 
@@ -56,15 +56,15 @@ cd Slp-Sleep-Like-a-Panda-
 npm install
 ```
 
-### ▶️ Uso
+### ▶️ Uso/Use
 
-Rodar o projeto:
+Rodar o projeto/Run project:
 
 ```sh
 npm start
 ```
 
-### 🧪 Testes
+### 🧪 Testes/Tests
 
 O projeto utiliza o framework de testes **{test\_framework}**. Para rodar os testes:
 
