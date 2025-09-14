@@ -85,7 +85,7 @@ const Alarmes = () => {
         }
 
         const newTempo = await api.post("/tempos", {
-          id: nextId, // 👈 força id numérico sequencial
+          id: String(nextId),// 👈 força id numérico sequencial
           userId,
           horario: Number(tempo),
           tipo,
