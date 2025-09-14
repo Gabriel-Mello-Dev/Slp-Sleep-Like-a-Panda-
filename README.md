@@ -2,7 +2,7 @@
 
 ---
 
-# 🐼 SLP-SLEEP-LIKE-A-PANDA-
+# 🐼 SLP-SLEEP-LIKE-A-PANDA
 
 *Durma Melhor, Viva de Forma Mais Inteligente, Acorde Revigorado*
 
@@ -17,7 +17,7 @@ Construído com as seguintes ferramentas e tecnologias/Built using the following
 **SLP-Sleep-Like-a-Panda-** é uma aplicação web moderna baseada em React, projetada para oferecer uma experiência suave e envolvente no gerenciamento de sono e alarmes.
 Com foco em **manutenibilidade e escalabilidade**, utiliza **Vite** para desenvolvimento rápido e uma arquitetura modular que simplifica fluxos de trabalho complexos no frontend.
 
-### 🚀 Por que SLP-Sleep-Like-a-Panda/Why SLP-Sleep-Like-a-Panda-?
+### 🚀 Por que SLP-Sleep-Like-a-Panda/Why SLP-Sleep-Like-a-Panda?
 
 O objetivo do projeto é fornecer uma plataforma **confiável e amigável** com **atualizações em tempo real** e **navegação fluida**.
 
@@ -46,13 +46,13 @@ Este projeto requer as seguintes dependências:
 Construa o projeto a partir do código-fonte e instale as dependências:
 
 ```sh
-# Clonar o repositório
+# Clonar o repositório/Cloning the repository
 git clone https://github.com/Gabriel-Mello-Dev/Slp-Sleep-Like-a-Panda-
 
-# Entrar no diretório do projeto
+# Entrar no diretório do projeto/Entering the project directory
 cd Slp-Sleep-Like-a-Panda-
 
-# Instalar dependências
+# Instalar dependências/Installing dependencies
 npm install
 ```
 
