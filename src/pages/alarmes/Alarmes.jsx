@@ -110,7 +110,7 @@ const Alarmes = () => {
 
     try {
       await api.put(`/tempos/${tempoId}`, {
-        id: tempoId,
+        id: String(tempoId),
         userId,
         horario: 0,
         tipo: 0,
