@@ -57,11 +57,15 @@ export const Inicial = () => {
 
       {/* Panda com relógio */}
       <div className={styles.pandaSection}>
-        <button onClick={toggleRain} className={styles.transparentButton}>
-          <img src={skinPanda} alt="Panda Clock" className={styles.panda} />
-        </button>
-<Clock type="inline" />   
+  <button onClick={toggleRain} className={styles.transparentButton}>
+    <div className={styles.pandaWrapper}>
+      <img src={skinPanda} alt="Panda Clock" className={styles.panda} />
+      <div className={styles.clockWrapper}>
+        <Clock type="inline" />
       </div>
+    </div>
+  </button>
+</div>
 
       {/* Panda na Lua */}
       <img

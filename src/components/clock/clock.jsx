@@ -29,19 +29,10 @@ const Clock = ({ type = "inline" }) => {
 
   // === POPUP MODE ===
   if (type === "popup") {
-    // se acabou o tempo, não renderiza nada
-    if (timeLeft <= 0) return null;
-
     return (
       <div className={styles.popupOverlay}>
         <div className={styles.popup}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <strong>Relógio</strong>
           </div>
 

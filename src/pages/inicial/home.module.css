@@ -28,15 +28,31 @@ transform: scale(1.1);
   align-items: center;
 }
 
+.clockWrapper {
+  position: absolute;
+  top: 50%;              /* Centraliza verticalmente */
+  left: 50%;             /* Centraliza horizontalmente */
+  transform: translate(-50%, -20%);
+  z-index: 10;      
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
+  padding: 4px 8px;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  pointer-events: none; 
+}
+.pandaWrapper {
+  position: relative;
+  display: inline-block;
+}
+
 .panda {
   width: 200px;
   height: auto;
   transition: transform 0.3s ease;
   cursor: pointer;
-}
-
-.panda:hover {
-  transform: scale(1.15);
+  display: block;
 }
 
 .nextAlarm {
@@ -74,28 +90,31 @@ cursor:pointer;
 
 }
 
-/* Bambu esquerdo */
 .bambooLeft {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   animation: sway 5s ease-in-out infinite;
+  pointer-events: none; /* não atrapalha cliques */
 }
 
 .bambooLeft img {
-  height: 300px;
+  height: 60vh; /* ajusta tamanho conforme tela */
+  max-height: 400px;
 }
 
-/* Bambu direito */
+/* 🌿 Bambu direito fixo na lateral */
 .bambooRight {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   animation: sway 5s ease-in-out infinite reverse;
+  pointer-events: none;
 }
 
 .bambooRight img {
-  height: 300px;
+  height: 60vh;
+  max-height: 400px;
 }
 
 /* ANIMAÇÕES */

@@ -61,6 +61,7 @@ const Head = () => {
         <Link to="/ModoSono">Modo Noturno</Link>
         <Link to="/loja">Loja</Link>
         <Link to="/sobrenos">Sobre-Nós</Link>
+        <Link to="/agenda">Agenda</Link>
         {user && <Link to="/perfil">Perfil</Link>}
       </nav>
 
