@@ -2,7 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { api } from "../../services";
 import styles from "./agenda.module.css";
-import {Clock} from '../../components'
+import { Clock } from "../../components";
+
 const Agenda = () => {
   const [selectedDay, setSelectedDay] = useState(null);
   const [alarmTime, setAlarmTime] = useState("");
@@ -10,13 +11,13 @@ const Agenda = () => {
   const [schedules, setSchedules] = useState([]);
   const [activeAlarm, setActiveAlarm] = useState(null);
   const [triggered, setTriggered] = useState(new Set());
-  const audioRef = useRef(new Audio("/alarme.mp3")); // <--- 1 único audio
+  const audioRef = useRef(new Audio("/alarme.mp3")); // 1 único audio
 
   const today = new Date();
   const currentDay = today.getDate();
   const currentMonth = today.getMonth();
   const currentYear = today.getFullYear();
-  const rawUserId = localStorage.getItem("userId");
+  const rawUserId = localStorage.getItem("userId"); // usuário logado
 
   const monthNames = [
     "Janeiro",
@@ -36,21 +37,24 @@ const Agenda = () => {
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
+  // === Carrega apenas os agendamentos do usuário logado ===
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
-        const res = await api.get("/tempos");
+        const res = await api.get(`/tempos?userId=${rawUserId}`);
         setSchedules(res.data || []);
       } catch (err) {
         console.error("Erro ao buscar agendamentos:", err);
       }
     };
     fetchSchedules();
-  }, []);
+  }, [rawUserId]);
 
+  // === Seleciona dia ===
   const handleDayClick = (day) => {
-    if (day < currentDay) return;
+    if (day < currentDay) return; // não permite dias passados
     setSelectedDay(day);
+
     const existing = schedules.find((a) => a.dia === day);
     if (existing) {
       setAlarmTime(existing.horario);
@@ -61,6 +65,7 @@ const Agenda = () => {
     }
   };
 
+  // === Salva ou atualiza agendamento ===
   const handleSave = async () => {
     if (!selectedDay || !alarmTime || !message) {
       alert("Preencha todos os campos!");
@@ -76,17 +81,21 @@ const Agenda = () => {
     };
 
     try {
+      // Atualiza se já existe, senão cria novo
       const existing = schedules.find(
         (a) => a.dia === selectedDay && a.userId === rawUserId
       );
+
       if (existing) {
         await api.put(`/tempos/${existing.id}`, newAgenda);
       } else {
         await api.post("/tempos", newAgenda);
       }
 
-      const res = await api.get("/tempos");
+      // Recarrega a lista filtrada
+      const res = await api.get(`/tempos?userId=${rawUserId}`);
       setSchedules(res.data);
+
       alert("Agendamento salvo!");
       setSelectedDay(null);
       setAlarmTime("");
@@ -105,6 +114,9 @@ const Agenda = () => {
       const currentDayNum = now.getDate();
 
       schedules.forEach((agenda) => {
+        // só agenda do usuário logado
+        if (agenda.userId !== rawUserId) return;
+
         const alreadyTriggered = triggered.has(agenda.id);
 
         if (
@@ -123,7 +135,7 @@ const Agenda = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [schedules, triggered]);
+  }, [schedules, triggered, rawUserId]);
 
   const stopAlarm = () => {
     if (audioRef.current) {
@@ -138,7 +150,9 @@ const Agenda = () => {
       <h1 className={styles.title}>
         Agenda - {monthNames[currentMonth]} {currentYear}
       </h1>
-<Clock type="popup"/>
+
+      <Clock type="popup" />
+
       <div className={styles.daysGrid}>
         {days.map((day) => {
           const agenda = schedules.find((a) => a.dia === day);
@@ -149,10 +163,11 @@ const Agenda = () => {
           return (
             <div
               key={day}
-              className={`${styles.dayBlock}
-                ${isSelected ? styles.selected : ""}
-                ${isPast ? styles.pastDay : ""}
-                ${isActive ? styles.activeDay : ""}`}
+              className={`${styles.dayBlock} ${
+                isSelected ? styles.selected : ""
+              } ${isPast ? styles.pastDay : ""} ${
+                isActive ? styles.activeDay : ""
+              }`}
               onClick={() => handleDayClick(day)}
             >
               <div>{day}</div>
