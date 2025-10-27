@@ -85,7 +85,7 @@ const Alarmes = () => {
         }
 
         const newTempo = await api.post("/tempos", {
-          id: String(nextId),// 👈 força id numérico sequencial
+          id: String(nextId), // 👈 força id numérico sequencial
           userId,
           horario: Number(tempo),
           tipo,
@@ -147,7 +147,7 @@ const Alarmes = () => {
         onChange={(e) => setTempo(e.target.value)}
         className={styles.input}
       />
-<Clock type="popup" />  
+      <Clock type="popup" />
       <div className={styles.alarmesLista}>
         <label className={styles.alarmeItem}>
           <input

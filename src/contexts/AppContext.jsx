@@ -27,7 +27,8 @@ export const AppContextProvider = ({ children }) => {
   const countdownIntervalRef = useRef(null);
   const pollingIntervalRef = useRef(null);
 
-  const userId = typeof window !== "undefined" ? localStorage.getItem("userId") : null;
+  const userId =
+    typeof window !== "undefined" ? localStorage.getItem("userId") : null;
   const CHECK_INTERVAL_MS = 5000;
 
   // Persistir tempo
@@ -51,10 +52,11 @@ export const AppContextProvider = ({ children }) => {
   // Countdown: decrementa timeLeft a cada segundo
   useEffect(() => {
     // evita múltiplos intervals
-    if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
+    if (countdownIntervalRef.current)
+      clearInterval(countdownIntervalRef.current);
 
     countdownIntervalRef.current = setInterval(() => {
-      setTimeLeft(prev => {
+      setTimeLeft((prev) => {
         const next = prev > 0 ? prev - 1 : 0;
         return next;
       });
@@ -127,21 +129,25 @@ export const AppContextProvider = ({ children }) => {
   const adicionarTarefa = async (nomeTarefa) => {
     setLoadingCriar(true);
     const { data: tarefa } = await api.post("/tarefas", { nome: nomeTarefa });
-    setTarefas(prev => [...prev, tarefa]);
+    setTarefas((prev) => [...prev, tarefa]);
     setLoadingCriar(false);
   };
 
   const removerTarefa = async (idTarefa) => {
     setLoadingDeletar(idTarefa);
     await api.delete(`/tarefas/${idTarefa}`);
-    setTarefas(prev => prev.filter(t => t.id !== idTarefa));
+    setTarefas((prev) => prev.filter((t) => t.id !== idTarefa));
     setLoadingDeletar(null);
   };
 
   const editarTarefa = async (id, nomeTarefa) => {
     setLoadingEditar(id);
-    const { data: tarefaAtulizada } = await api.put(`/tarefas/${id}`, { nome: nomeTarefa });
-    setTarefas(prev => prev.map(t => (t.id === id ? { ...t, nome: tarefaAtulizada.nome } : t)));
+    const { data: tarefaAtulizada } = await api.put(`/tarefas/${id}`, {
+      nome: nomeTarefa,
+    });
+    setTarefas((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, nome: tarefaAtulizada.nome } : t))
+    );
     setLoadingEditar(null);
   };
 

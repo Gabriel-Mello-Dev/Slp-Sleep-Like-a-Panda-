@@ -1,15 +1,10 @@
-
-.container{
-
-
-background-size: 100% 100%;
-height: 100vh;
-
+.container {
+  background-size: 100% 100%;
+  height: 100vh;
 }
-.bigText{
-
-color: white;
-text-align: center;
+.bigText {
+  color: white;
+  text-align: center;
 }
 
 .container img:hover {

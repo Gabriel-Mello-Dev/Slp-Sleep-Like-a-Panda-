@@ -6,9 +6,7 @@
       "email": "gabriel@email.com",
       "senha": "123",
       "skinEquipada": "gratis",
-      "skinsCompradas": [
-        "gratis"
-      ]
+      "skinsCompradas": ["gratis"]
     },
     {
       "id": "2",
@@ -16,13 +14,7 @@
       "email": "roger@a",
       "senha": "123",
       "skinEquipada": "dj",
-      "skinsCompradas": [
-        "gratis",
-        "ninja",
-        "robo",
-        "zen",
-        "dj"
-      ]
+      "skinsCompradas": ["gratis", "ninja", "robo", "zen", "dj"]
     },
     {
       "id": "3",
@@ -30,11 +22,7 @@
       "email": "Gabriel@1",
       "senha": "123",
       "skinEquipada": "gratis",
-      "skinsCompradas": [
-        "gratis",
-        "ninja",
-        "zen"
-      ]
+      "skinsCompradas": ["gratis", "ninja", "zen"]
     },
     {
       "id": "4",
@@ -42,9 +30,7 @@
       "email": "123@a",
       "senha": "123",
       "skinEquipada": "gratis",
-      "skinsCompradas": [
-        "gratis"
-      ]
+      "skinsCompradas": ["gratis"]
     },
     {
       "id": "5",
@@ -52,9 +38,7 @@
       "email": "a@a",
       "senha": "123",
       "skinEquipada": "gratis",
-      "skinsCompradas": [
-        "gratis"
-      ]
+      "skinsCompradas": ["gratis"]
     }
   ],
   "tempos": [

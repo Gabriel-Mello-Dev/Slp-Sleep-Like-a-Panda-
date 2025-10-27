@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import {Head, Foot} from "../../components";
+import { Head, Foot } from "../../components";
 
 const Padrao = () => {
   return (
@@ -13,4 +13,4 @@ const Padrao = () => {
   );
 };
 
-export  {Padrao};
+export { Padrao };

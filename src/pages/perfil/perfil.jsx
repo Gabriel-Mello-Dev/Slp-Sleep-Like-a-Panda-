@@ -14,7 +14,7 @@ export default function Perfil() {
 
   useEffect(() => {
     if (!userId) return;
-    api.get(`/users/${userId}`).then(res => {
+    api.get(`/users/${userId}`).then((res) => {
       setUser(res.data);
       setNome(res.data.nome);
       setEmail(res.data.email);
@@ -24,7 +24,7 @@ export default function Perfil() {
   const salvarPerfil = async () => {
     if (!userId) return;
     try {
-      await api.put(`/users/${userId}`, {...user, nome, email});
+      await api.put(`/users/${userId}`, { ...user, nome, email });
       setMsg("✅ Perfil atualizado!");
     } catch (error) {
       setMsg("❌ Erro ao atualizar perfil");
@@ -42,12 +42,22 @@ export default function Perfil() {
   return (
     <div className={styles.container}>
       <h2>Editar Perfil</h2>
-      <Clock type="popup" />   
+      <Clock type="popup" />
 
-      <input placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} />
-      <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
+      <input
+        placeholder="Nome"
+        value={nome}
+        onChange={(e) => setNome(e.target.value)}
+      />
+      <input
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
       <button onClick={salvarPerfil}>Salvar</button>
-      <button onClick={logout} style={{marginTop:"10px"}}>Sair</button>
+      <button onClick={logout} style={{ marginTop: "10px" }}>
+        Sair
+      </button>
       {msg && <p>{msg}</p>}
     </div>
   );

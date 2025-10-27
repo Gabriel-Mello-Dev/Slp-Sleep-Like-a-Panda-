@@ -4,7 +4,8 @@ import styles from "./clock.module.css";
 import { AppContext } from "../../contexts/AppContext";
 
 const Clock = ({ type = "inline" }) => {
-  const { timeLeft, alarmPlaying, stopAlarm, alarmType } = useContext(AppContext);
+  const { timeLeft, alarmPlaying, stopAlarm, alarmType } =
+    useContext(AppContext);
 
   const formatTime = (seconds) => {
     const m = String(Math.floor(seconds / 60)).padStart(2, "0");
@@ -32,7 +33,13 @@ const Clock = ({ type = "inline" }) => {
     return (
       <div className={styles.popupOverlay}>
         <div className={styles.popup}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <strong>Relógio</strong>
           </div>
 
@@ -52,7 +59,6 @@ const Clock = ({ type = "inline" }) => {
     );
   }
 
-  // === Fallback (caso type inválido) ===
   return null;
 };
 

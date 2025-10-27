@@ -7,7 +7,7 @@
   padding: 2rem;
   background-color: #7a7a7a;
   color: #454546;
-height: 50Vw;
+  height: 50vw;
   /* efeito de fade-in geral */
   animation: fadeIn 1s ease-in-out;
 }
@@ -18,7 +18,7 @@ height: 50Vw;
   font-weight: bold;
   text-align: center;
   color: #ffffff;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 
   /* entrada com leve subida */
   animation: slideDown 0.8s ease;
@@ -62,7 +62,7 @@ height: 50Vw;
 
 .button:hover {
   background: #454546;
-  transform: scale(1.1) rotate(-2deg); 
+  transform: scale(1.1) rotate(-2deg);
 }
 
 .success {
@@ -81,8 +81,8 @@ height: 50Vw;
 
 .alarmesLista {
   display: flex;
-  flex-direction: column; 
-  gap: 16px; 
+  flex-direction: column;
+  gap: 16px;
   margin-top: 20px;
 }
 
@@ -95,19 +95,33 @@ height: 50Vw;
   border-radius: 8px;
 }
 
-
-
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-30px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

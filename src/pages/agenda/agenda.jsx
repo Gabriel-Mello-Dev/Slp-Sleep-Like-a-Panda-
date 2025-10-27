@@ -13,8 +13,18 @@ const Agenda = () => {
   const currentYear = today.getFullYear();
 
   const monthNames = [
-    "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
-    "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
   ];
 
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -42,10 +52,10 @@ const Agenda = () => {
           agenda: {
             dia: selectedDay,
             mes: monthNames[currentMonth],
-            horario: alarmTime
-          }
-        }
-      }
+            horario: alarmTime,
+          },
+        },
+      },
     };
 
     try {
@@ -63,10 +73,11 @@ const Agenda = () => {
       if (!selectedDay || !alarmTime) return;
 
       const now = new Date();
-      const dayMatches = now.getDate() === selectedDay &&
-                         now.getMonth() === currentMonth &&
-                         now.getFullYear() === currentYear;
-      const timeMatches = now.toTimeString().slice(0,5) === alarmTime;
+      const dayMatches =
+        now.getDate() === selectedDay &&
+        now.getMonth() === currentMonth &&
+        now.getFullYear() === currentYear;
+      const timeMatches = now.toTimeString().slice(0, 5) === alarmTime;
 
       if (dayMatches && timeMatches && audioRef.current) {
         audioRef.current.play();
@@ -111,7 +122,9 @@ const Agenda = () => {
       )}
 
       <audio ref={audioRef} src="/alarm.mp3" />
-      {selectedDay && <p className={styles.selectedText}>Dia selecionado: {selectedDay}</p>}
+      {selectedDay && (
+        <p className={styles.selectedText}>Dia selecionado: {selectedDay}</p>
+      )}
     </div>
   );
 };

@@ -22,11 +22,11 @@ const Sono = () => {
     }
 
     if (audioRef.current && audioRef.current.paused) {
-      audioRef.current.play().catch(err => console.log(err));
+      audioRef.current.play().catch((err) => console.log(err));
     }
 
     intervalRef.current = setInterval(() => {
-      setTimeLeft(prev => {
+      setTimeLeft((prev) => {
         if (prev <= 1) {
           desligar();
           return 0;
@@ -42,7 +42,10 @@ const Sono = () => {
     const h = Math.floor(sec / 3600);
     const m = Math.floor((sec % 3600) / 60);
     const s = sec % 60;
-    return `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+    return `${String(h).padStart(2, "0")}:${String(m).padStart(
+      2,
+      "0"
+    )}:${String(s).padStart(2, "0")}`;
   };
 
   const desligar = () => {
@@ -64,7 +67,7 @@ const Sono = () => {
     <div className={style.container}>
       <h1 className={style.title}>Modo Sono</h1>
       <h2>Indique a quantia de horas desejadas</h2>
-  <Clock type="popup" />
+      <Clock type="popup" />
       <div className={style.controls}>
         <input
           type="number"
@@ -76,8 +79,16 @@ const Sono = () => {
           className={style.input}
         />
         <div>
-          <button onClick={iniciar} disabled={isRunning} className={style.button}>Iniciar</button>
-          <button onClick={desligar} className={style.button}>Desligar</button>
+          <button
+            onClick={iniciar}
+            disabled={isRunning}
+            className={style.button}
+          >
+            Iniciar
+          </button>
+          <button onClick={desligar} className={style.button}>
+            Desligar
+          </button>
         </div>
       </div>
 
@@ -85,7 +96,14 @@ const Sono = () => {
 
       <audio ref={audioRef} src="/rain.mp3" loop />
 
-      {isRunning && <div className={style.dimmingOverlay}><img src="https://juststickers.in/wp-content/uploads/2021/01/sleeping-panda.png" alt="Panda sleep" /></div>}
+      {isRunning && (
+        <div className={style.dimmingOverlay}>
+          <img
+            src="https://juststickers.in/wp-content/uploads/2021/01/sleeping-panda.png"
+            alt="Panda sleep"
+          />
+        </div>
+      )}
     </div>
   );
 };

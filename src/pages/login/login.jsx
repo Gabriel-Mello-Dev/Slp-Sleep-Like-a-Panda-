@@ -30,7 +30,8 @@ export default function Login() {
 
       localStorage.setItem("userId", user.id);
       setMsg("✅ Logado com sucesso!");
-      setEmail(""); setSenha("");
+      setEmail("");
+      setSenha("");
       navigate("/"); // volta ao home logado
     } catch (error) {
       console.error(error);
@@ -46,13 +47,34 @@ export default function Login() {
   return (
     <div className={styles.container}>
       <h2>Login</h2>
-      <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-      <input type="password" placeholder="Senha" value={senha} onChange={e => setSenha(e.target.value)} />
+      <input
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Senha"
+        value={senha}
+        onChange={(e) => setSenha(e.target.value)}
+      />
       <button onClick={login}>Entrar</button>
-      <button onClick={logout} style={{marginTop:"10px"}}>Sair</button>
-      {msg && <p className={msg.includes("✅") ? styles.success : styles.error}>{msg}</p>}
+      <button onClick={logout} style={{ marginTop: "10px" }}>
+        Sair
+      </button>
+      {msg && (
+        <p className={msg.includes("✅") ? styles.success : styles.error}>
+          {msg}
+        </p>
+      )}
       <p>
-        Não possui conta? <span onClick={() => navigate("/Singup")} style={{cursor: "pointer", color:"#09f"}}>Criar conta</span>
+        Não possui conta?{" "}
+        <span
+          onClick={() => navigate("/Singup")}
+          style={{ cursor: "pointer", color: "#09f" }}
+        >
+          Criar conta
+        </span>
       </p>
     </div>
   );

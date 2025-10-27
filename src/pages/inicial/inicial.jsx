@@ -6,12 +6,13 @@ import { api } from "../../services";
 export const Inicial = () => {
   const [skinPanda, setSkinPanda] = useState(""); // Panda atual
   const [showRain, setShowRain] = useState(false); // Mostra chuva de pandas
-  const userId = localStorage.getItem("userId");   // ID do usuário logado
+  const userId = localStorage.getItem("userId"); // ID do usuário logado
 
   // Mapeamento das skins para URLs
   const skinsMap = {
     gratis: "/pandaClock.png",
-    ninja: "https://png.pngtree.com/png-clipart/20230423/original/pngtree-the-panda-character-as-a-shaolin-warrior-carrying-a-bamboo-stick-png-image_9076894.png",
+    ninja:
+      "https://png.pngtree.com/png-clipart/20230423/original/pngtree-the-panda-character-as-a-shaolin-warrior-carrying-a-bamboo-stick-png-image_9076894.png",
     robo: "https://png.pngtree.com/png-vector/20250803/ourmid/pngtree-panda-robot-drawing-illustration-vector-png-image_16821857.webp",
     dj: "https://cdn.pixabay.com/photo/2023/09/24/10/12/ai-generated-8272508_1280.png",
     zen: "https://png.pngtree.com/png-clipart/20250501/original/pngtree-peaceful-zen-panda-sitting-in-a-serene-yoga-pose-png-image_20924858.png",
@@ -39,7 +40,7 @@ export const Inicial = () => {
   }, [userId]);
 
   // Alterna chuva de pandas
-  const toggleRain = () => setShowRain(prev => !prev);
+  const toggleRain = () => setShowRain((prev) => !prev);
 
   return (
     <div className={styles.container}>
@@ -57,15 +58,15 @@ export const Inicial = () => {
 
       {/* Panda com relógio */}
       <div className={styles.pandaSection}>
-  <button onClick={toggleRain} className={styles.transparentButton}>
-    <div className={styles.pandaWrapper}>
-      <img src={skinPanda} alt="Panda Clock" className={styles.panda} />
-      <div className={styles.clockWrapper}>
-        <Clock type="inline" />
+        <button onClick={toggleRain} className={styles.transparentButton}>
+          <div className={styles.pandaWrapper}>
+            <img src={skinPanda} alt="Panda Clock" className={styles.panda} />
+            <div className={styles.clockWrapper}>
+              <Clock type="inline" />
+            </div>
+          </div>
+        </button>
       </div>
-    </div>
-  </button>
-</div>
 
       {/* Panda na Lua */}
       <img
