@@ -26,10 +26,77 @@ export const AppContextProvider = ({ children }) => {
   const audioRef = useRef(null);
   const countdownIntervalRef = useRef(null);
   const pollingIntervalRef = useRef(null);
+  const [agendamentos, setAgendamentos] = useState([]);
 
   const userId =
     typeof window !== "undefined" ? localStorage.getItem("userId") : null;
   const CHECK_INTERVAL_MS = 5000;
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const fetchAgendamentos = async () => {
+      try {
+        const res = await api.get(`/agendamentos?userId=${userId}`);
+        if (Array.isArray(res.data)) setAgendamentos(res.data);
+      } catch (err) {
+        console.error("Erro ao buscar agendamentos:", err);
+      }
+    };
+
+    fetchAgendamentos();
+  }, [userId]);
+
+  // 💾 salvar/atualizar agendamento
+  const salvarAgendamento = async ({ dia, mes, horario, mensagem }) => {
+    if (!userId) return alert("⚠️ Usuário não logado.");
+
+    try {
+      const all = await api.get("/agendamentos");
+      const nextId =
+        all.data.length > 0
+          ? Math.max(...all.data.map((a) => Number(a.id))) + 1
+          : 1;
+
+      const novo = {
+        id: String(nextId),
+        userId,
+        dia,
+        mes,
+        horario,
+        mensagem,
+        ativo: true,
+      };
+
+      await api.post("/agendamentos", novo);
+      setAgendamentos((prev) => [...prev, novo]);
+      alert("✅ Alarme agendado com sucesso!");
+    } catch (err) {
+      console.error(err);
+      alert("❌ Erro ao salvar agendamento");
+    }
+  };
+
+  // ⏰ monitorar se algum agendamento bate com o horário atual
+  useEffect(() => {
+    const check = setInterval(() => {
+      const agora = new Date();
+      agendamentos.forEach((a) => {
+        if (!a.ativo) return;
+        const diaMatch = a.dia === agora.getDate();
+        const mesMatch =
+          a.mes === agora.toLocaleString("pt-BR", { month: "long" });
+        const horaMatch = a.horario === agora.toTimeString().slice(0, 5);
+        if (diaMatch && mesMatch && horaMatch && !alarmPlaying) {
+          if (audioRef.current) audioRef.current.play();
+          setAlarmPlaying(true);
+          alert(`🔔 ${a.mensagem || "Alarme disparado!"}`);
+        }
+      });
+    }, 1000);
+
+    return () => clearInterval(check);
+  }, [agendamentos, alarmPlaying]);
 
   // Persistir tempo
   useEffect(() => {
@@ -45,7 +112,7 @@ export const AppContextProvider = ({ children }) => {
     let src = "/alarme.mp3";
     if (alarmType === 2) src = "/alarme2.mp3";
     if (alarmType === 3) src = "/alarme3.mp3";
-    audioRef.current = new Audio(src);
+    audioRef.current = new Audio("/alarme.mp3");
     audioRef.current.loop = true;
   }, [alarmType]);
 
@@ -159,17 +226,6 @@ export const AppContextProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        // tarefas
-        criador,
-        tarefas,
-        adicionarTarefa,
-        removerTarefa,
-        editarTarefa,
-        loadingCriar,
-        loadingDeletar,
-        loadingEditar,
-        loadingCarregar,
-
         // relógio / alarme (expostos)
         timeLeft,
         setTimeLeft,
@@ -179,6 +235,8 @@ export const AppContextProvider = ({ children }) => {
         alarmType,
         setAlarmType,
         stopAlarm,
+        agendamentos,
+        salvarAgendamento,
       }}
     >
       {children}
