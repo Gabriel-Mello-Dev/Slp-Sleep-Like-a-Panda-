@@ -71,3 +71,34 @@
   60%  { transform: translateY(8px); }
   100% { transform: translateY(0); }
 }
+
+
+.stopButton {
+  margin-top: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.popupOverlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 24px;
+
+  /* Permite clicar fora do popup */
+  pointer-events: none;
+}
+
+.popup {
+  width: 220px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  padding: 12px;
+  z-index: 9999;
+
+  /* Reativa os cliques apenas dentro do popup */
+  pointer-events: auto;
+}

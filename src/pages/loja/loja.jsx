@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import styles from "./loja.module.css";
 import { api } from "../../services";
+import { Clock } from "../../components";
 
 const produtos = [
   { id: "gratis", nome: "Panda Comum", preco: 0.0, url: "/pandaClock.png" },
@@ -58,6 +59,7 @@ export const Loja = () => {
     <div className={styles.container}>
       <h1 className={styles.titulo}>Loja de Skins de Pandas</h1>
       <div className={styles.grid}>
+        <Clock type="popup" />
         {produtos.map(produto => {
           const jaComprou = user?.skinsCompradas?.includes(produto.id);
           return (

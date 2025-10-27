@@ -60,7 +60,7 @@ export const Inicial = () => {
         <button onClick={toggleRain} className={styles.transparentButton}>
           <img src={skinPanda} alt="Panda Clock" className={styles.panda} />
         </button>
-        <Clock />
+<Clock type="inline" />   
       </div>
 
       {/* Panda na Lua */}

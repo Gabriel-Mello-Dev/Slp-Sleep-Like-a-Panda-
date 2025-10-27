@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import style from "./sono.module.css";
+import { Clock } from "../../components";
 
 const Sono = () => {
   const [hours, setHours] = useState(8);
@@ -63,7 +64,7 @@ const Sono = () => {
     <div className={style.container}>
       <h1 className={style.title}>Modo Sono</h1>
       <h2>Indique a quantia de horas desejadas</h2>
-
+  <Clock type="popup" />
       <div className={style.controls}>
         <input
           type="number"

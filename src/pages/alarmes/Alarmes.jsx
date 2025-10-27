@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "./alarmes.module.css";
 import { api } from "../../services";
-
+import { Clock } from "../../components";
 const Alarmes = () => {
   const [tempo, setTempo] = useState("");
   const [msg, setMsg] = useState("");
@@ -147,7 +147,7 @@ const Alarmes = () => {
         onChange={(e) => setTempo(e.target.value)}
         className={styles.input}
       />
-
+<Clock type="popup" />  
       <div className={styles.alarmesLista}>
         <label className={styles.alarmeItem}>
           <input

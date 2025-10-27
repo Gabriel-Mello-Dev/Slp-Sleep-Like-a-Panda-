@@ -1,10 +1,11 @@
 import style from './sobre.module.css'
+import { Clock } from "../../components";
 
 const Sobre = () => {
   return (
     <div className={style.container}>
       <h1 className={style.title}>Sleep Like a Panda (SLP)</h1>
-      
+        <Clock type="popup" />
       <p className={style.description}>
         Sleep Like a Panda é um site criado para ajudar a reduzir a ansiedade enquanto você navega na internet. 
         Ele oferece duas funcionalidades principais:

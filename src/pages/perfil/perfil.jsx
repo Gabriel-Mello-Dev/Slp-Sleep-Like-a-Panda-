@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { api } from "../../services";
 import { useNavigate } from "react-router-dom";
 import styles from "./perfil.module.css";
+import { Clock } from "../../components";
 
 export default function Perfil() {
   const navigate = useNavigate();
@@ -41,6 +42,8 @@ export default function Perfil() {
   return (
     <div className={styles.container}>
       <h2>Editar Perfil</h2>
+      <Clock type="popup" />   
+
       <input placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} />
       <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
       <button onClick={salvarPerfil}>Salvar</button>
