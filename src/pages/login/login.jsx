@@ -1,6 +1,8 @@
+// src/pages/auth/Login.jsx
 import { useState } from "react";
 import { api } from "../../services";
 import { useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs";
 import styles from "./auth.module.css";
 
 export default function Login() {
@@ -16,25 +18,31 @@ export default function Login() {
     }
 
     try {
-      const res = await api.get(`/users?email=${email}`);
+      // busca usuário pelo email
+      const res = await api.get(`/users?email=${encodeURIComponent(email)}`);
       if (res.data.length === 0) {
         setMsg("❌ Usuário não encontrado");
         return;
       }
 
       const user = res.data[0];
-      if (senha !== user.senha) {
+
+      // compara a senha (texto) com o hash salvo (user.senha)
+      const match = await bcrypt.compare(senha, user.senha);
+      if (!match) {
         setMsg("❌ Senha incorreta");
         return;
       }
 
+      // login OK
       localStorage.setItem("userId", user.id);
       setMsg("✅ Logado com sucesso!");
       setEmail("");
       setSenha("");
-      navigate("/"); // volta ao home logado
+      // redireciona
+      navigate("/");
     } catch (error) {
-      console.error(error);
+      console.error("Erro ao logar:", error);
       setMsg("❌ Erro ao logar");
     }
   };

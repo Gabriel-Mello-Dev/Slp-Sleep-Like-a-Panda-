@@ -4,7 +4,7 @@
       "id": "1",
       "nome": "Gabriel",
       "email": "gabriel@email.com",
-      "senha": "123",
+      "senha": "$2b$10$z/AH.PywEjVyAF4qWnAmzuzhPiKU4cYzHq//KzaKk7cPZVBRb4zEG",
       "skinEquipada": "gratis",
       "skinsCompradas": [
         "gratis"
@@ -14,7 +14,7 @@
       "id": "2",
       "nome": "roger",
       "email": "roger@a",
-      "senha": "123",
+      "senha": "$2b$10$z/AH.PywEjVyAF4qWnAmzuzhPiKU4cYzHq//KzaKk7cPZVBRb4zEG",
       "skinEquipada": "dj",
       "skinsCompradas": [
         "gratis",
@@ -28,7 +28,7 @@
       "id": "3",
       "nome": "gabriel",
       "email": "Gabriel@1",
-      "senha": "123",
+      "senha": "$2b$10$z/AH.PywEjVyAF4qWnAmzuzhPiKU4cYzHq//KzaKk7cPZVBRb4zEG",
       "skinEquipada": "gratis",
       "skinsCompradas": [
         "gratis",
@@ -40,7 +40,7 @@
       "id": "4",
       "nome": "francisco",
       "email": "123@a",
-      "senha": "123",
+      "senha": "$2b$10$z/AH.PywEjVyAF4qWnAmzuzhPiKU4cYzHq//KzaKk7cPZVBRb4zEG",
       "skinEquipada": "gratis",
       "skinsCompradas": [
         "gratis"
@@ -50,7 +50,17 @@
       "id": "5",
       "nome": "Gabriel",
       "email": "a@a",
-      "senha": "123",
+      "senha": "$2b$10$z/AH.PywEjVyAF4qWnAmzuzhPiKU4cYzHq//KzaKk7cPZVBRb4zEG",
+      "skinEquipada": "gratis",
+      "skinsCompradas": [
+        "gratis"
+      ]
+    },
+    {
+      "id": "6",
+      "nome": "Ga",
+      "email": "ga@a",
+      "senha": "$2b$10$z/AH.PywEjVyAF4qWnAmzuzhPiKU4cYzHq//KzaKk7cPZVBRb4zEG",
       "skinEquipada": "gratis",
       "skinsCompradas": [
         "gratis"
@@ -85,13 +95,13 @@
     {
       "id": "5",
       "userId": 5,
-      "horario": 0,
-      "tipo": 0
+      "horario": 1,
+      "tipo": 2
     },
     {
       "dia": 27,
       "mes": "Outubro",
-      "horario": "20:12",
+      "horario": "20:15",
       "mensagem": "reunião",
       "userId": "5",
       "id": "9e6b"

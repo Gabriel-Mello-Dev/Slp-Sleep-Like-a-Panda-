@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { api } from "../../services";
 import { useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs";
 import styles from "./auth.module.css";
 
 export default function Signup() {
@@ -17,35 +18,41 @@ export default function Signup() {
     }
 
     try {
-      const res = await api.get(`/users?email=${email}`);
-      if (res.data.length > 0) {
+      // Verifica se usuário já existe
+      const resCheck = await api.get(`/users?email=${email}`);
+      if (resCheck.data.length > 0) {
         setMsg("⚠️ Usuário já existe");
         return;
       }
+
+      // Hash da senha antes de enviar
+      const salt = bcrypt.genSaltSync(10); // gera salt
+      const hashedPassword = bcrypt.hashSync(senha, salt);
 
       // Pega todos os usuários para calcular próximo ID
       const allUsers = await api.get("/users");
       let nextId = 1;
       if (allUsers.data.length > 0) {
-        const ids = allUsers.data.map((u) => parseInt(u.id, 10)); // transforma string em number
+        const ids = allUsers.data.map((u) => parseInt(u.id, 10));
         nextId = Math.max(...ids) + 1;
       }
 
-      const user = await api.post("/users", {
-        id: String(nextId), // salva como string no db
+      // Cria usuário com senha hash
+      const res = await api.post("/users", {
+        id: String(nextId),
         nome,
         email,
-        senha,
+        senha: hashedPassword, // senha agora é hash
         skinEquipada: "gratis",
         skinsCompradas: ["gratis"],
       });
 
-      localStorage.setItem("userId", user.data.id);
+      localStorage.setItem("userId", res.data.id);
       setMsg("✅ Conta criada com sucesso!");
       setNome("");
       setEmail("");
       setSenha("");
-      navigate("/"); // vai para home logado
+      navigate("/"); // home logado
     } catch (error) {
       console.error(error);
       setMsg("❌ Erro ao criar conta");
@@ -77,15 +84,6 @@ export default function Signup() {
           {msg}
         </p>
       )}
-      <p>
-        Já possui conta?{" "}
-        <span
-          onClick={() => navigate("/login")}
-          style={{ cursor: "pointer", color: "#09f" }}
-        >
-          Logar
-        </span>
-      </p>
     </div>
   );
 }

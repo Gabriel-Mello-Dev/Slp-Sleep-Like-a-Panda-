@@ -43,12 +43,14 @@ export default function Perfil() {
     <div className={styles.container}>
       <h2>Editar Perfil</h2>
       <Clock type="popup" />
+      <label htmlFor="">Nome</label>
 
       <input
         placeholder="Nome"
         value={nome}
         onChange={(e) => setNome(e.target.value)}
       />
+      <label htmlFor="">Email</label>
       <input
         placeholder="Email"
         value={email}

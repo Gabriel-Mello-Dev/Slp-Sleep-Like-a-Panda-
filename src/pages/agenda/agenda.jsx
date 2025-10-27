@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { api } from "../../services";
 import styles from "./agenda.module.css";
-
+import {Clock} from '../../components'
 const Agenda = () => {
   const [selectedDay, setSelectedDay] = useState(null);
   const [alarmTime, setAlarmTime] = useState("");
@@ -138,7 +138,7 @@ const Agenda = () => {
       <h1 className={styles.title}>
         Agenda - {monthNames[currentMonth]} {currentYear}
       </h1>
-
+<Clock type="popup"/>
       <div className={styles.daysGrid}>
         {days.map((day) => {
           const agenda = schedules.find((a) => a.dia === day);
