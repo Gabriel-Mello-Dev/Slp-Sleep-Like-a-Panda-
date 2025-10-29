@@ -90,6 +90,14 @@ export const Inicial = () => {
           alt="Bambu"
         />
       </div>
+
+      {/*floresta
+      <div>
+        <img
+          src="https://png.pngtree.com/png-clipart/20221119/ourmid/pngtree-forest-clip-art-cartoon-style-png-image_6462711.png"
+          alt="Floresta"
+        />
+      </div>*/}
     </div>
   );
 };
