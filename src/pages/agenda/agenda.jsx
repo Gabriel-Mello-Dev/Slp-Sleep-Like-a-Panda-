@@ -72,6 +72,11 @@ const Agenda = () => {
       return;
     }
 
+if (!rawUserId){
+  alert("entre em sua conta primeiro para salvar");
+        return;
+}
+    
     const newAgenda = {
       dia: selectedDay,
       mes: monthNames[currentMonth],
@@ -213,10 +218,10 @@ const Agenda = () => {
             <p>
               <strong>{activeAlarm.mensagem}</strong>
             </p>
-            <p>
+            <p  style={{color: "black"}}>
               {activeAlarm.dia} de {activeAlarm.mes} às {activeAlarm.horario}
             </p>
-            <button onClick={stopAlarm} className={styles.stopButton}>
+            <button onClick={stopAlarm} className={styles.stopButton} style={{color: "black"}}>
               Parar Alarme
             </button>
           </div>
