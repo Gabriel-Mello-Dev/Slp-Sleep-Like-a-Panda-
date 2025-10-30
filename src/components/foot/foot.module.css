@@ -1,8 +1,7 @@
 .footer {
   text-align: center;
   padding: 16px;
-  background-color: #f9f9f9;
-  border-top: 1px solid #e0e0e0;
+  background-image: linear-gradient(to right,#cb2fff,#2993ef,#ffff 30% 70%,#2993ef,#cb2fff);
   margin-top: auto;
   bottom: 0;
   position: fixed;
