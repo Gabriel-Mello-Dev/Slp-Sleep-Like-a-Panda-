@@ -177,7 +177,7 @@ if (!rawUserId){
             >
               <div>{day}</div>
               {agenda && (
-                <div className={styles.timeLabel}>{agenda.horario}</div>
+                <div className={styles.timeLabel}></div>
               )}
             </div>
           );
@@ -216,7 +216,7 @@ if (!rawUserId){
           <div className={styles.popup}>
             <h2>⏰ Lembrete</h2>
             <p>
-              <strong>{activeAlarm.mensagem}</strong>
+              <strong  style={{color: "black"}}>{activeAlarm.mensagem}</strong>
             </p>
             <p  style={{color: "black"}}>
               {activeAlarm.dia} de {activeAlarm.mes} às {activeAlarm.horario}
