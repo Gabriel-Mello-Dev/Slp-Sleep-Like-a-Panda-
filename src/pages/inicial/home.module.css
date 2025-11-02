@@ -1,7 +1,5 @@
 .container {
   position: relative;
-  background-image: linear-gradient(
-    to top,#2c2c2c,#240562,#68069A,#B201EB 30%,#cb2fff 60%);
   text-align: center;
   padding: 40px 20px;
   min-height: 70vh;

@@ -1,0 +1,24 @@
+:root {
+  /* === MODO CLARO (panda normal) === */
+  --color-bg: #f6eeee;        /* fundo principal */
+  --color-header: #020000;    /* topbar e sidebar */
+  --color-text: #ffffff;
+  --color-accent: #2f2fe6;    /* botões etc */
+  --color-accent-hover: #5b5be7;
+}
+
+/* === MODO ESCURO (panda vermelho) === */
+.dark {
+  --color-bg: #340701;        /* fundo principal */
+  --color-header: #b13d14;    /* topbar e sidebar */
+  --color-text: #fff;
+  --color-accent: #ff6347;    /* toque avermelhado */
+  --color-accent-hover: #ff8566;
+}
+
+/* Fundo e cor de texto base */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background 0.3s ease, color 0.3s ease;
+}

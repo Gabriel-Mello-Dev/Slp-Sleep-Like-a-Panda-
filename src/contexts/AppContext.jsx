@@ -5,8 +5,6 @@ import { api } from "../services";
 export const AppContext = createContext({});
 
 export const AppContextProvider = ({ children }) => {
-  // tarefas (seu código existente)
-  const [tarefas, setTarefas] = useState([]);
   const [criador] = useState("Gabriel Mello");
   const [loadingCriar, setLoadingCriar] = useState(false);
   const [loadingDeletar, setLoadingDeletar] = useState(null);
@@ -181,47 +179,8 @@ export const AppContextProvider = ({ children }) => {
     return () => clearInterval(pollingIntervalRef.current);
   }, [userId]);
 
-  // Exemplo das funções de tarefas (mantive seu código)
-  const carregarTarefas = async () => {
-    setLoadingCarregar(true);
-    try {
-      const response = await api.get("/tarefas");
-      setTarefas(response.data);
-    } catch (error) {
-      console.error("Erro ao carregar tarefas:", error);
-    }
-    setLoadingCarregar(false);
-  };
 
-  const adicionarTarefa = async (nomeTarefa) => {
-    setLoadingCriar(true);
-    const { data: tarefa } = await api.post("/tarefas", { nome: nomeTarefa });
-    setTarefas((prev) => [...prev, tarefa]);
-    setLoadingCriar(false);
-  };
 
-  const removerTarefa = async (idTarefa) => {
-    setLoadingDeletar(idTarefa);
-    await api.delete(`/tarefas/${idTarefa}`);
-    setTarefas((prev) => prev.filter((t) => t.id !== idTarefa));
-    setLoadingDeletar(null);
-  };
-
-  const editarTarefa = async (id, nomeTarefa) => {
-    setLoadingEditar(id);
-    const { data: tarefaAtulizada } = await api.put(`/tarefas/${id}`, {
-      nome: nomeTarefa,
-    });
-    setTarefas((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, nome: tarefaAtulizada.nome } : t))
-    );
-    setLoadingEditar(null);
-  };
-
-  useEffect(() => {
-    carregarTarefas();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <AppContext.Provider

@@ -83,8 +83,8 @@
     {
       "id": "3",
       "userId": 3,
-      "horario": 2,
-      "tipo": 1
+      "horario": 0,
+      "tipo": 0
     },
     {
       "id": "4",
@@ -95,8 +95,8 @@
     {
       "id": "5",
       "userId": 5,
-      "horario": 1,
-      "tipo": 2
+      "horario": 0,
+      "tipo": 0
     },
     {
       "dia": 27,
