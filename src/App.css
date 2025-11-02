@@ -2,7 +2,7 @@
   /* === MODO CLARO (panda normal) === */
   --color-bg: #f6eeee;        /* fundo principal */
   --color-header: #020000;    /* topbar e sidebar */
-  --color-text: #ffffff;
+  --color-text: #000000;
   --color-accent: #2f2fe6;    /* botões etc */
   --color-accent-hover: #5b5be7;
 }

@@ -149,6 +149,7 @@ const Alarmes = () => {
       />
       <Clock type="popup" />
       <div className={styles.alarmesLista}>
+        {/* Audio 1 */}
         <label className={styles.alarmeItem}>
           <input
             type="checkbox"
@@ -158,8 +159,28 @@ const Alarmes = () => {
             }
           />
           <span>Alarme 1</span>
-          <audio controls src="/alarme.mp3"></audio>
+
+          {/* Ícones de controle de áudio */}
+          <span
+            className={styles.audioIcon}
+            onClick={() => document.getElementById("audio1").play()}
+            title="Tocar som"
+          >
+            🔈
+          </span>
+          <span
+            className={styles.audioIcon}
+            onClick={() => document.getElementById("audio1").pause()}
+            title="Parar som"
+          >
+            ⏸️
+          </span>
+
+          {/* Áudio oculto */}
+          <audio id="audio1" src="/alarme.mp3" />
         </label>
+
+        {/* Audio 2 */}
 
         <label className={styles.alarmeItem}>
           <input
@@ -170,8 +191,28 @@ const Alarmes = () => {
             }
           />
           <span>Alarme 2</span>
-          <audio controls src="/alarme2.mp3"></audio>
+
+          {/* Ícones de controle de áudio */}
+          <span
+            className={styles.audioIcon}
+            onClick={() => document.getElementById("audio2").play()}
+            title="Tocar som"
+          >
+            🔈
+          </span>
+          <span
+            className={styles.audioIcon}
+            onClick={() => document.getElementById("audio2").pause()}
+            title="Parar som"
+          >
+            ⏸️
+          </span>
+
+          {/* Áudio oculto */}
+          <audio id="audio2" src="/alarme2.mp3" />
         </label>
+
+        {/* Audio 3 */}
 
         <label className={styles.alarmeItem}>
           <input
@@ -182,7 +223,25 @@ const Alarmes = () => {
             }
           />
           <span>Alarme 3</span>
-          <audio controls src="/alarme3.mp3"></audio>
+
+          {/* Ícones de controle de áudio */}
+          <span
+            className={styles.audioIcon}
+            onClick={() => document.getElementById("audio3").play()}
+            title="Tocar som"
+          >
+            🔈
+          </span>
+          <span
+            className={styles.audioIcon}
+            onClick={() => document.getElementById("audio3").pause()}
+            title="Parar som"
+          >
+            ⏸️
+          </span>
+
+          {/* Áudio oculto */}
+          <audio id="audio3" src="/alarme3.mp3" />
         </label>
       </div>
 

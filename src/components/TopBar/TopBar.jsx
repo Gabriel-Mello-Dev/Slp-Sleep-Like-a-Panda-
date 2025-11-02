@@ -49,6 +49,10 @@ const TopBar = () => {
       setDark(true);
       localStorage.setItem("theme", "dark");
     }
+
+location.reload();
+
+
   };
 
   useEffect(() => {
@@ -66,37 +70,37 @@ const TopBar = () => {
   return (
     <header className={styles.topbar}>
       <div className={styles.left}>
-    <button
-  onClick={handlePandaClick}
-  className={styles.transparentButton}
-  aria-label="Panda"
->
-  {clicked ? (
-    // 💤 Panda acordado (varia conforme o tema)
-    <img
-      src={
-        dark
-          ? "/redCute.gif" // 🟥 panda vermelho acordado
-          : "/cute.gif"                       // ⚪ panda normal acordado
-      }
-      alt="Panda Acordado"
-      width={60}
-      height={60}
-    />
-  ) : (
-    // 😴 Panda dormindo (varia conforme o tema)
-    <img
-      src={
-        dark
-          ? "https://images.vexels.com/media/users/3/325722/isolated/preview/9ddc9ea001c1946ee72afb0b5df6769f-panda-vermelho-de-desenho-animado-com-os-bracos-estendidos.png" // 🟥 panda vermelho dormindo
-          : "https://juststickers.in/wp-content/uploads/2021/01/sleeping-panda.png"
-      }
-      alt="Panda Dormindo"
-      width={60}
-      height={60}
-    />
-  )}
-</button>
+        <button
+          onClick={handlePandaClick}
+          className={styles.transparentButton}
+          aria-label="Panda"
+        >
+          {clicked ? (
+            // 💤 Panda acordado (varia conforme o tema)
+            <img
+              src={
+                dark
+                  ? "/redCute.gif" // 🟥 panda vermelho acordado
+                  : "/cute.gif" // ⚪ panda normal acordado
+              }
+              alt="Panda Acordado"
+              width={60}
+              height={60}
+            />
+          ) : (
+            // 😴 Panda dormindo (varia conforme o tema)
+            <img
+              src={
+                dark
+                  ? "https://images.vexels.com/media/users/3/325722/isolated/preview/9ddc9ea001c1946ee72afb0b5df6769f-panda-vermelho-de-desenho-animado-com-os-bracos-estendidos.png" // 🟥 panda vermelho dormindo
+                  : "https://juststickers.in/wp-content/uploads/2021/01/sleeping-panda.png"
+              }
+              alt="Panda Dormindo"
+              width={60}
+              height={60}
+            />
+          )}
+        </button>
 
         <span className={styles.title}>Sleep Like a Panda</span>
       </div>
@@ -106,13 +110,13 @@ const TopBar = () => {
           {user ? `Olá, ${user.nome}` : "⚠️ Faça login"}
         </span>
 
-     <button
-  className={`${styles.themeSwitch} ${dark ? styles.dark : ""}`}
-  onClick={toggleDark}
-  aria-label="Alternar tema"
->
-  <span className={`${styles.switchBall} ${dark ? styles.dark : ""}`} />
-</button>
+        <button
+          className={`${styles.themeSwitch} ${dark ? styles.dark : ""}`}
+          onClick={toggleDark}
+          aria-label="Alternar tema"
+        >
+          <span className={`${styles.switchBall} ${dark ? styles.dark : ""}`} />
+        </button>
 
         {user ? (
           <div className={styles.profileWrapper}>
@@ -122,14 +126,25 @@ const TopBar = () => {
               aria-haspopup="menu"
               aria-expanded={menuOpen}
             >
-              <img src="https://icon-library.com/images/profile-icon-png/profile-icon-png-8.jpg" className={styles.profileIcon}/>
+              <img
+                src="https://icon-library.com/images/profile-icon-png/profile-icon-png-8.jpg"
+                className={styles.profileIcon}
+              />
             </button>
             {menuOpen && (
               <div className={styles.profileMenu} role="menu">
-                <Link to="/perfil" role="menuitem" onClick={() => setMenuOpen(false)}>
+                <Link
+                  to="/perfil"
+                  role="menuitem"
+                  onClick={() => setMenuOpen(false)}
+                >
                   Perfil
                 </Link>
-                <Link to="/sobrenos" role="menuitem" onClick={() => setMenuOpen(false)}>
+                <Link
+                  to="/sobrenos"
+                  role="menuitem"
+                  onClick={() => setMenuOpen(false)}
+                >
                   Sobre Nós
                 </Link>
               </div>

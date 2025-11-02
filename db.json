@@ -51,9 +51,10 @@
       "nome": "Gabriel",
       "email": "a@a",
       "senha": "$2b$10$z/AH.PywEjVyAF4qWnAmzuzhPiKU4cYzHq//KzaKk7cPZVBRb4zEG",
-      "skinEquipada": "gratis",
+      "skinEquipada": "dj",
       "skinsCompradas": [
-        "gratis"
+        "gratis",
+        "dj"
       ]
     },
     {

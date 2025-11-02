@@ -7,6 +7,12 @@ export const Inicial = () => {
   const [skinPanda, setSkinPanda] = useState(""); // Panda atual
   const [showRain, setShowRain] = useState(false); // Mostra chuva de pandas
   const userId = localStorage.getItem("userId"); // ID do usuário logado
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    const isDark = document.documentElement.classList.contains("dark");
+    setDark(isDark);
+  }, []);
 
   // Mapeamento das skins para URLs
   const skinsMap = {
@@ -34,6 +40,7 @@ export const Inicial = () => {
         console.error("Erro ao buscar skin do usuário:", err);
         setSkinPanda(skinsMap.gratis);
       }
+      console.log("é dark?", dark);
     };
 
     fetchUser();
@@ -70,7 +77,11 @@ export const Inicial = () => {
 
       {/* Panda na Lua */}
       <img
-        src="https://png.pngtree.com/png-clipart/20220102/original/pngtree-adorable-baby-panda-sleeping-illustration-in-watercolor-png-image_6995799.png"
+        src={
+          dark
+            ? "/redpandamoon.png"
+            : "https://png.pngtree.com/png-clipart/20220102/original/pngtree-adorable-baby-panda-sleeping-illustration-in-watercolor-png-image_6995799.png"
+        }
         alt="Panda na Lua"
         className={styles.moonPanda}
       />
@@ -78,7 +89,7 @@ export const Inicial = () => {
       {/* Bambu Esquerdo */}
       <div className={styles.bambooLeft}>
         <img
-          src="https://images.vexels.com/media/users/3/158414/isolated/preview/094793b5f05dd54e703f54509344f0a1-ilustracao-de-haste-de-bambu.png"
+          src="https://easydrawingguides.com/wp-content/uploads/2021/01/Bamboo-Step-10.png"
           alt="Bambu"
         />
       </div>
@@ -86,7 +97,7 @@ export const Inicial = () => {
       {/* Bambu Direito */}
       <div className={styles.bambooRight}>
         <img
-          src="https://images.vexels.com/media/users/3/158414/isolated/preview/094793b5f05dd54e703f54509344f0a1-ilustracao-de-haste-de-bambu.png"
+          src="https://easydrawingguides.com/wp-content/uploads/2021/01/Bamboo-Step-10.png"
           alt="Bambu"
         />
       </div>

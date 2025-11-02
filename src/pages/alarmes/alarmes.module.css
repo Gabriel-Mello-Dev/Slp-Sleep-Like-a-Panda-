@@ -1,126 +1,157 @@
+/* Container principal */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* joga mais pra cima */
+  justify-content: flex-start;
   min-height: 100vh;
   padding: 2rem;
-  color: #454546;
-  height: 50vw;
-  /* efeito de fade-in geral */
-  animation: fadeIn 1s ease-in-out;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  animation: fadeIn 0.8s ease-in-out;
+  transition: background-color 0.3s, color 0.3s;
+  font-family: 'Inter', sans-serif;
 }
 
+/* Título */
 .title {
   font-size: 2rem;
-  margin-bottom: 2rem;
-  font-weight: bold;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
   text-align: center;
-  color: #ffffff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-
-  /* entrada com leve subida */
+  color: var(--color-text);
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
   animation: slideDown 0.8s ease;
 }
 
+/* Input estilizado */
 .input {
-  padding: 0.8rem 1rem;
+  padding: 0.7rem 1rem;
   font-size: 1rem;
-  border: 2px solid #8c8c8c;
-  border-radius: 0.5rem;
-  background: #00000056;
-  color: #ffffff;
+  border: 2px solid black;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--color-text);
   outline: none;
-  margin-bottom: 1.5rem;
-  width: 220px;
+  margin-bottom: 1.2rem;
+  width: 200px;
   text-align: center;
-  transition: 0.3s;
-
-  /* entrada suave */
-  animation: fadeInUp 0.8s ease forwards;
+  transition: all 0.3s ease;
 }
 
 .input:focus {
-  border-color: #666666;
-  box-shadow: 0 0 8px #8c8c8c;
-  color: white;
+  border-color: var(--color-accent-hover);
+  box-shadow: 0 0 8px var(--color-accent);
 }
 
+/* Botões menores e concisos */
 .button {
-  background: #666666;
-  color: #f5e1c8;
+  background: rgb(57, 143, 31);
+  color: var(--color-text);
   border: none;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 10px;
   cursor: pointer;
-  transition: 0.3s;
-  animation: fadeInUp 1s ease forwards;
+  margin: 0.5rem 0;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  width: 20vw;
 }
 
 .button:hover {
-  background: #454546;
-  transform: scale(1.1) rotate(-2deg);
+  background: var(--color-accent-hover);
+  transform: scale(1.05) translateY(-1px);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.25);
 }
 
+/* Botão de desativar alarmes */
+.stopButton {
+  background: #ff4d4f;
+  color: #fff;
+}
+
+.stopButton:hover {
+  background: #ff6b6b;
+}
+
+/* Mensagens */
 .success {
-  margin-top: 1rem;
-  color: #4ade80;
-  font-weight: bold;
-  animation: fadeIn 0.5s ease;
+  margin-top: 0.8rem;
+  color: #4ade80; 
+  font-weight: 600;
 }
 
 .error {
-  margin-top: 1rem;
-  color: #f87171;
-  font-weight: bold;
-  animation: fadeIn 0.5s ease;
+  margin-top: 0.8rem;
+  color: #f87171; 
+  font-weight: 600;
 }
 
+/* Lista de alarmes */
 .alarmesLista {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
+  gap: 12px;
+  margin-top: 15px;
+  width: 100%;
+  max-width: 320px;
 }
 
+/* Cada item da lista */
 .alarmeItem {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  padding: 10px 12px;
+   border: 2px solid black;
+  border-radius: 10px;
+  background-color: rgba(0,0,0,0.15);
+  color: var(--color-text);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
+.alarmeItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  background-color: rgba(0,0,0,0.25);
+}
+
+/* Checkbox maior */
+.alarmeItem input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+/* Texto do alarme */
+.alarmeItem span {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Ícone de áudio 🔈 */
+.alarmeItem .audioIcon {
+  margin-left: auto;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.alarmeItem .audioIcon:hover {
+  transform: scale(1.2);
+  color: var(--color-accent-hover);
+}
+
+/* Animações suaves */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }

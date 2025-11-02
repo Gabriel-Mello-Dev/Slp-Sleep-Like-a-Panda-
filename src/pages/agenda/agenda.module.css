@@ -1,11 +1,13 @@
 .agendaContainer {
   padding: 24px;
   text-align: center;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 .title {
   margin-bottom: 20px;
-  color: #333;
+  color: var(--color-text);
 }
 
 .daysGrid {
@@ -16,31 +18,35 @@
 }
 
 .dayBlock {
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-accent);
   border-radius: 8px;
   padding: 12px 0;
   cursor: pointer;
   transition: 0.2s;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 .dayBlock:hover {
-  background-color: #f5f5f5;
+  background-color: var(--color-accent-hover);
 }
 
 .selected {
-  background-color: #cce5ff;
-  border-color: #66b0ff;
+  background-color: green;
+  border-color: var(--color-accent-hover);
+   color: black;
+
 }
 
 .pastDay {
-  color: #aaa;
-  background-color: #f9f9f9;
+  color: #aaa; /* opcional, poderia criar --color-pastDay se quiser */
+  background-color: hsl(0, 0%, 56%); /* ou usar variável */
   cursor: not-allowed;
 }
 
 .activeDay {
-  background-color: #b9ffb0; /* verde */
-  border-color: #4caf50;
+  background-color: #4caf50; /* poderia criar --color-activeDay se quiser */
+  border-color: #388e3c;
   color: #000;
   font-weight: 600;
 }
@@ -48,13 +54,14 @@
 .timeLabel {
   font-size: 0.8rem;
   margin-top: 4px;
-  color: #333;
+  color: var(--color-text);
 }
 
 .alarmContainer {
   margin-top: 20px;
   text-align: left;
   display: inline-block;
+  color: var(--color-text);
 }
 
 .timeInput,
@@ -64,19 +71,23 @@
   margin-bottom: 12px;
   padding: 6px;
   width: 200px;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-accent);
+  border-radius: 4px;
 }
 
 .saveButton {
   padding: 8px 16px;
-  background: #007bff;
-  color: #fff;
+  background: var(--color-accent);
+  color: var(--color-text);
   border: none;
   border-radius: 6px;
   cursor: pointer;
 }
 
 .saveButton:hover {
-  background: #0056b3;
+  background: var(--color-accent-hover);
 }
 
 /* Pop-up */
@@ -90,18 +101,19 @@
 }
 
 .popup {
-  background: #fff;
+  background: var(--color-bg);
   padding: 24px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   max-width: 300px;
   text-align: center;
+  color: var(--color-text);
 }
 
 .stopButton {
   margin-top: 12px;
   padding: 8px 14px;
-  background: #ff4d4f;
+  background: #ff4d4f; /* você pode criar --color-stop se quiser */
   color: white;
   border: none;
   border-radius: 6px;

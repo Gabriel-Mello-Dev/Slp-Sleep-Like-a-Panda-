@@ -1,12 +1,12 @@
 .container {
-  position: relative;
+  position: relative; /* já tem */
   text-align: center;
   padding: 40px 20px;
   min-height: 70vh;
   overflow: hidden;
   height: 50vw;
+  z-index: 0; /* garante referência para os bambus */
 }
-
 .title {
   font-size: 40px;
   font-weight: bold;
@@ -68,28 +68,30 @@
   transition: ease-in-out 2s;
 }
 
-/* Bambu esquerdo */
-.bambooLeft {
+/* Bambus atrás do conteúdo, centralizados verticalmente */
+.bambooLeft,
+.bambooRight {
   position: absolute;
-  bottom: 0;
-  left: 0;
+  top: 50%;                /* centraliza verticalmente */
+  transform: translateY(-50%);
+  z-index: -1;             /* atrás do container */
   animation: sway 5s ease-in-out infinite;
 }
 
-.bambooLeft img {
-  height: 300px;
+.bambooLeft {
+  left: 0;
 }
 
-/* Bambu direito */
 .bambooRight {
-  position: absolute;
-  bottom: 0;
   right: 0;
-  animation: sway 5s ease-in-out infinite reverse;
+  animation-direction: reverse;
 }
 
+/* Ajuste das imagens dos bambus */
+.bambooLeft img,
 .bambooRight img {
-  height: 300px;
+  height: 500px;           /* altura maior */
+  object-fit: contain;
 }
 
 /* ANIMAÇÕES */
