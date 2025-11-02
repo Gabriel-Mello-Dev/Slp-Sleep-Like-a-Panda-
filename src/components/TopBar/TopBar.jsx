@@ -1,7 +1,7 @@
 // src/components/TopBar/index.jsx
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import styles from "./topbar.module.css";
+import styles from "./Topbar.module.css";
 import { api } from "../../services";
 
 const TopBar = () => {
