@@ -101,7 +101,7 @@ cd Slp-Sleep-Like-a-Panda-
 npm install
 ```
 
-### Estrutura de Dados (db.json)
+### 💾 Estrutura de Dados (db.json)
  ```
 
 Este artefato JSON simula o estado de dados persistente (base de dados mock) para o projeto, contendo as coleções users e tempos. É utilizado em ambientes de desenvolvimento para simular uma API RESTful completa.
