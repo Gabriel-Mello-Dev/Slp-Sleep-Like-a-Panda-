@@ -11,13 +11,13 @@ const Agenda = () => {
   const [schedules, setSchedules] = useState([]);
   const [activeAlarm, setActiveAlarm] = useState(null);
   const [triggered, setTriggered] = useState(new Set());
-  const audioRef = useRef(new Audio("/alarme.mp3")); // 1 único audio
+  const audioRef = useRef(new Audio("/alarme.mp3"));
 
   const today = new Date();
   const currentDay = today.getDate();
   const currentMonth = today.getMonth();
   const currentYear = today.getFullYear();
-  const rawUserId = localStorage.getItem("userId"); // usuário logado
+  const rawUserId = localStorage.getItem("userId");
 
   const monthNames = [
     "Janeiro",
@@ -34,28 +34,51 @@ const Agenda = () => {
     "Dezembro",
   ];
 
+  const currentMonthName = monthNames[currentMonth];
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
-  // === Carrega apenas os agendamentos do usuário logado ===
+  // === Carrega apenas agendamentos do usuário logado e mês atual ===
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
         const res = await api.get(`/tempos?userId=${rawUserId}`);
-        setSchedules(res.data || []);
+        const all = res.data || [];
+
+        // Filtra por mês atual e remove passados
+        const valid = all.filter((a) => {
+          const monthOk = a.mes === currentMonthName;
+          const dayOk =
+            a.dia > currentDay ||
+            (a.dia === currentDay &&
+              a.horario >= today.toTimeString().slice(0, 5));
+          return monthOk && dayOk;
+        });
+
+        // Remove do banco os passados
+        const expired = all.filter(
+          (a) => a.mes === currentMonthName && a.dia < currentDay
+        );
+        for (const e of expired) {
+          await api.delete(`/tempos/${e.id}`).catch(() => {});
+        }
+
+        setSchedules(valid);
       } catch (err) {
         console.error("Erro ao buscar agendamentos:", err);
       }
     };
     fetchSchedules();
-  }, [rawUserId]);
+  }, [rawUserId, currentMonthName]);
 
-  // === Seleciona dia ===
+  // === Selecionar dia ===
   const handleDayClick = (day) => {
-    if (day < currentDay) return; // não permite dias passados
+    if (day < currentDay) return;
     setSelectedDay(day);
 
-    const existing = schedules.find((a) => a.dia === day);
+    const existing = schedules.find(
+      (a) => a.dia === day && a.mes === currentMonthName
+    );
     if (existing) {
       setAlarmTime(existing.horario);
       setMessage(existing.mensagem);
@@ -65,7 +88,7 @@ const Agenda = () => {
     }
   };
 
-  // === Salva ou atualiza agendamento ===
+  // === Salvar ou atualizar agendamento ===
   const handleSave = async () => {
     if (!selectedDay || !alarmTime || !message) {
       alert("Preencha todos os campos!");
@@ -74,16 +97,18 @@ const Agenda = () => {
 
     const newAgenda = {
       dia: selectedDay,
-      mes: monthNames[currentMonth],
+      mes: currentMonthName,
       horario: alarmTime,
       mensagem: message,
       userId: rawUserId,
     };
 
     try {
-      // Atualiza se já existe, senão cria novo
       const existing = schedules.find(
-        (a) => a.dia === selectedDay && a.userId === rawUserId
+        (a) =>
+          a.dia === selectedDay &&
+          a.mes === currentMonthName &&
+          a.userId === rawUserId
       );
 
       if (existing) {
@@ -92,9 +117,9 @@ const Agenda = () => {
         await api.post("/tempos", newAgenda);
       }
 
-      // Recarrega a lista filtrada
       const res = await api.get(`/tempos?userId=${rawUserId}`);
-      setSchedules(res.data);
+      const filtered = res.data.filter((a) => a.mes === currentMonthName);
+      setSchedules(filtered);
 
       alert("Agendamento salvo!");
       setSelectedDay(null);
@@ -106,16 +131,46 @@ const Agenda = () => {
     }
   };
 
-  // === Verifica alarmes ===
+  // === Excluir agendamento ===
+  const handleDelete = async () => {
+    if (!selectedDay) return;
+    const existing = schedules.find(
+      (a) =>
+        a.dia === selectedDay &&
+        a.mes === currentMonthName &&
+        a.userId === rawUserId
+    );
+    if (!existing) {
+      alert("Nenhum agendamento neste dia.");
+      return;
+    }
+
+    if (!confirm("Deseja excluir este agendamento?")) return;
+
+    try {
+      await api.delete(`/tempos/${existing.id}`);
+      setSchedules((prev) => prev.filter((a) => a.id !== existing.id));
+      alert("Agendamento removido!");
+      setSelectedDay(null);
+      setAlarmTime("");
+      setMessage("");
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao excluir agendamento.");
+    }
+  };
+
+  // === Verificar alarmes ===
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
       const currentTime = now.toTimeString().slice(0, 5);
       const currentDayNum = now.getDate();
+      const currentMonthNameNow = monthNames[now.getMonth()];
 
       schedules.forEach((agenda) => {
-        // só agenda do usuário logado
         if (agenda.userId !== rawUserId) return;
+        if (agenda.mes !== currentMonthNameNow) return;
 
         const alreadyTriggered = triggered.has(agenda.id);
 
@@ -124,10 +179,8 @@ const Agenda = () => {
           agenda.horario === currentTime &&
           !alreadyTriggered
         ) {
-          // Toca apenas 1 vez usando audioRef
           audioRef.current.loop = true;
           audioRef.current.play().catch(() => {});
-
           setActiveAlarm(agenda);
           setTriggered((prev) => new Set(prev).add(agenda.id));
         }
@@ -148,14 +201,16 @@ const Agenda = () => {
   return (
     <div className={styles.agendaContainer}>
       <h1 className={styles.title}>
-        Agenda - {monthNames[currentMonth]} {currentYear}
+        Agenda - {currentMonthName} {currentYear}
       </h1>
 
       <Clock type="popup" />
 
       <div className={styles.daysGrid}>
         {days.map((day) => {
-          const agenda = schedules.find((a) => a.dia === day);
+          const agenda = schedules.find(
+            (a) => a.dia === day && a.mes === currentMonthName
+          );
           const isPast = day < currentDay;
           const isSelected = day === selectedDay;
           const isActive = Boolean(agenda);
@@ -172,9 +227,14 @@ const Agenda = () => {
             >
               <div>{day}</div>
               {agenda && (
+                <>
                 <div className={styles.timeLabel}>{agenda.horario}</div>
+                                  <div className={styles.msgLabel}>{agenda.mensagem}</div>
+
+                </>
               )}
             </div>
+            
           );
         })}
       </div>
@@ -199,9 +259,14 @@ const Agenda = () => {
             className={styles.messageInput}
           />
 
-          <button onClick={handleSave} className={styles.saveButton}>
-            Salvar
-          </button>
+          <div className={styles.buttonsRow}>
+            <button onClick={handleSave} className={styles.saveButton}>
+              Salvar
+            </button>
+            <button onClick={handleDelete} className={styles.deleteButton}>
+              Excluir
+            </button>
+          </div>
         </div>
       )}
 

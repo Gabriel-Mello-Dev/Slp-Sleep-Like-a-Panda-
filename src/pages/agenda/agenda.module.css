@@ -79,11 +79,21 @@
 .saveButton {
   padding: 8px 16px;
   background: var(--color-accent);
-  color: var(--color-text);
+  color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  width: 15vw;
+  width: 12vw;
+}
+
+.msgLabel {
+  font-size: 0.75rem;
+  color: #333;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
+  opacity: 0.8;
 }
 
 .saveButton:hover {
@@ -99,6 +109,27 @@
   align-items: center;
   justify-content: center;
 }
+
+.buttonsRow {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.deleteButton {
+  background-color: #c9302c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 12vw;
+}
+
+.deleteButton:hover {
+  background-color: #b52b27;
+}
+
 
 .popup {
   background: var(--color-bg);
