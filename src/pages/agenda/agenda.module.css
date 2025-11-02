@@ -34,8 +34,7 @@
 .selected {
   background-color: green;
   border-color: var(--color-accent-hover);
-   color: black;
-
+  color: black;
 }
 
 .pastDay {
@@ -84,6 +83,7 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  width: 15vw;
 }
 
 .saveButton:hover {

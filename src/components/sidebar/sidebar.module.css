@@ -1,5 +1,5 @@
 .sidebar {
-  width: 84px;
+  width: 100px;
   min-width: 84px;
   background: var(--color-header);
   color: var(--color-text);
@@ -32,7 +32,7 @@
   padding: 8px 10px;
   border-radius: 10px;
   text-align: center;
-  font-size: 14px;
+  font-size: 18px;
   width: 100%;
   transition: background 0.3s ease, box-shadow 0.3s ease;
 }
@@ -43,5 +43,6 @@
 
 .active {
   background: var(--accent-4);
-  box-shadow: 0 0 0 2px rgba(91, 91, 231, 0.35) inset;
+  box-shadow: 0 0 0 2px  var(--color-border)inset;
+  background: red;
 }

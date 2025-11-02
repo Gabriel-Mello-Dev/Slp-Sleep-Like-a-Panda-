@@ -2,7 +2,7 @@
   max-width: 400px;
   margin: 20px auto;
   padding: 20px;
-  background-color: #f7f7f7;
+  background-color: rgba(240, 248, 255, 0.795);
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -20,6 +20,11 @@
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 16px;
+}
+
+.classh2{
+
+  color:#080808
 }
 
 .button {
@@ -43,8 +48,13 @@
   text-align: center;
 }
 
+.sair{
+background-color: red;
+
+}
+
 .error {
-  color: red;
+  color: rgb(202, 49, 49);
   margin-top: 15px;
   text-align: center;
 }

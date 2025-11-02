@@ -8,7 +8,7 @@
   justify-content: space-between;
   padding: 0 16px;
   background: var(--color-header);
-  color: var(--color-text);
+  color: var(--color-title);
   border-bottom: 1px solid var(--border-color);
   transition: background 0.3s ease, color 0.3s ease;
 }
@@ -16,10 +16,23 @@
 /* ==========================
    ELEMENTOS BÁSICOS
 ========================== */
-.left { display: flex; align-items: center; gap: 12px; }
-.title { font-weight: 600; font-size: 18px; color: var(--color-text); }
-.right { display: flex; align-items: center; gap: 12px; }
-.transparentButton, .darkToggle {
+.left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.title {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--color-title);
+}
+.right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.transparentButton,
+.darkToggle {
   background: transparent;
   border: 0;
   padding: 0;
@@ -27,19 +40,19 @@
   color: var(--color-text);
   transition: color 0.3s;
 }
-.transparentButton:hover{
-      background: transparent;
-
+.transparentButton:hover {
+  background: transparent;
 }
 .darkToggle:hover {
   color: var(--accent-2);
-
 }
 
 /* ==========================
    PERFIL E MENU
 ========================== */
-.profileWrapper { position: relative; }
+.profileWrapper {
+  position: relative;
+}
 
 .profileButton {
   background: var(--accent-3);
@@ -55,10 +68,10 @@
   background: var(--accent-2);
 }
 .profileIcon {
-     font-size: 16px;
-     width: 36px;
-     height: 36px;
-    }
+  font-size: 16px;
+  width: 36px;
+  height: 36px;
+}
 
 .profileMenu {
   position: absolute;
@@ -73,7 +86,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   transition: background 0.3s, color 0.3s;
 }
 .profileMenu a {
@@ -91,27 +104,39 @@
 /* ==========================
    BOTÕES DE AUTENTICAÇÃO
 ========================== */
-.authButtons { display: flex; gap: 8px; }
+.authButtons {
+  display: flex;
+  gap: 8px;
+}
 
-.signIn, .register {
+.signIn,
+.register {
   color: #fff;
   padding: 8px 12px;
   border-radius: 8px;
   text-decoration: none;
   transition: background 0.3s ease;
 }
-.signIn { background: var(--accent-3); }
-.signIn:hover { background: var(--accent-2); }
+.signIn {
+  background: var(--accent-3);
+}
+.signIn:hover {
+  background: var(--accent-2);
+}
 
-.register { background: var(--accent-4); }
-.register:hover { background: var(--accent-3); }
+.register {
+  background: var(--accent-4);
+}
+.register:hover {
+  background: var(--accent-3);
+}
 
 /* ==========================
    TEXTO
 ========================== */
 .userText {
-  opacity: .9;
-  color: var(--color-text);
+  opacity: 0.9;
+  color: var(--color-title);
   transition: color 0.3s;
 }
 /* Botão base do switch */
@@ -146,6 +171,6 @@
 
 /* Bolinha quando o botão estiver em dark */
 .themeSwitch.dark .switchBall {
-  left: 28px;        /* move para o lado direito */
+  left: 28px; /* move para o lado direito */
   background: #b13d14; /* bolinha vermelha */
 }

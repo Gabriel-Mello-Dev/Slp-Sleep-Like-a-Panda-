@@ -41,7 +41,7 @@ export default function Perfil() {
 
   return (
     <div className={styles.container}>
-      <h2>Editar Perfil</h2>
+      <h2 className={styles.classh2}>Editar Perfil</h2>
       <Clock type="popup" />
       <label htmlFor="">Nome</label>
 
@@ -57,7 +57,7 @@ export default function Perfil() {
         onChange={(e) => setEmail(e.target.value)}
       />
       <button onClick={salvarPerfil}>Salvar</button>
-      <button onClick={logout} style={{ marginTop: "10px" }}>
+      <button onClick={logout} style={{ marginTop: "10px", backgroundColor: "rgb(202, 49, 49)"}}>
         Sair
       </button>
       {msg && <p>{msg}</p>}
