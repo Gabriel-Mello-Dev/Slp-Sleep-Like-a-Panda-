@@ -101,6 +101,74 @@ cd Slp-Sleep-Like-a-Panda-
 npm install
 ```
 
+### 
+```
+Estrutura de Dados (db.json)
+Este artefato JSON simula o estado de dados persistente (base de dados mock) para o projeto, contendo as coleções users e tempos. É utilizado em ambientes de desenvolvimento para simular uma API RESTful completa.
+1. Coleções Principais
+O arquivo consiste em um objeto raiz contendo dois arrays:
+1.1. users
+Contém o perfil, credenciais e personalizações (skins) dos usuários.
+Campo
+Tipo
+Descrição
+id
+string
+ID único do usuário.
+nome
+string
+Nome de exibição.
+email
+string
+Credencial de login (e-mail).
+senha
+string
+Senha em texto simples. (ALERTA DE SEGURANÇA)
+skinEquipada
+string
+ID da skin atualmente ativa.
+skinsCompradas
+Array<string>
+IDs das skins que o usuário possui.
+
+1.2. tempos
+Contém registros de eventos cronometrados ou agendamentos, com um schema heterogêneo.
+Tipo de Registro
+Campos Chave
+Detalhes
+Score/Tempo
+id, userId (number), horario (number), tipo (number)
+Usado para pontuações ou registros de tempo numéricos.
+Agendamento
+id, userId (string), dia, mes, horario (HH:MM), mensagem
+Usado para agendamentos textuais com data e hora.
+
+2. Configuração e Uso Rápido (json-server)
+Para simular uma API RESTful a partir deste arquivo:
+Instalação (Node.js):
+Bash
+npm install -g json-server
+
+
+Salvar: Salve o JSON completo como db.json.
+Executar o Servidor:
+Bash
+json-server --watch db.json
+
+
+Endpoints Gerados:
+Recurso
+Exemplo de Endpoint
+Usuários
+GET /users, GET /users/1
+Registros de Tempo
+GET /tempos, POST /tempos
+
+
+
+
+```
+
 ### 🛫 Running the project/Rodando o projeto 
 
 Para **rodar o projeto de forma local**, basta executar os comandos a seguir, após ter copiado o projeto, navegado para o diretório correto e instalado as dependências.
