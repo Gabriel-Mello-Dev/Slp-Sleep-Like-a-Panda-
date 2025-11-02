@@ -107,8 +107,8 @@
   padding: 10px 12px;
    border: 2px solid black;
   border-radius: 10px;
-  background-color: rgba(0,0,0,0.15);
-  color: var(--color-text);
+  background-color: rgba(0, 0, 0, 0.952);
+  color: white;
   transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
