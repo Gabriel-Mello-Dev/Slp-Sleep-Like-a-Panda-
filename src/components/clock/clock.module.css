@@ -2,16 +2,15 @@
   display: inline-block;
   padding: 12px 24px;
   background: #2c2c2c;
-  border: 6px solid #000000; 
+  border: 6px solid #000000;
   border-radius: 8px;
-  font-family: "Digital-7", monospace, sans-serif; 
+  font-family: "Digital-7", monospace, sans-serif;
   font-size: 48px;
   color: #63d138;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   min-width: 50vw;
-    transition: ease-in-out 1s;
-
+  transition: ease-in-out 1s;
 }
 .clock:hover {
   transform: scale(1.1);
@@ -57,21 +56,42 @@
   animation: wave 0.6s ease forwards;
 }
 
-.nextAlarm:hover span:nth-child(1)  { animation-delay: 0s; }
-.nextAlarm:hover span:nth-child(2)  { animation-delay: 0.05s; }
-.nextAlarm:hover span:nth-child(3)  { animation-delay: 0.1s; }
-.nextAlarm:hover span:nth-child(4)  { animation-delay: 0.15s; }
-.nextAlarm:hover span:nth-child(5)  { animation-delay: 0.2s; }
-.nextAlarm:hover span:nth-child(6)  { animation-delay: 0.25s; }
-.nextAlarm:hover span:nth-child(7)  { animation-delay: 0.3s; }
-
-@keyframes wave {
-  0%   { transform: translateY(0); }
-  30%  { transform: translateY(-8px); }
-  60%  { transform: translateY(8px); }
-  100% { transform: translateY(0); }
+.nextAlarm:hover span:nth-child(1) {
+  animation-delay: 0s;
+}
+.nextAlarm:hover span:nth-child(2) {
+  animation-delay: 0.05s;
+}
+.nextAlarm:hover span:nth-child(3) {
+  animation-delay: 0.1s;
+}
+.nextAlarm:hover span:nth-child(4) {
+  animation-delay: 0.15s;
+}
+.nextAlarm:hover span:nth-child(5) {
+  animation-delay: 0.2s;
+}
+.nextAlarm:hover span:nth-child(6) {
+  animation-delay: 0.25s;
+}
+.nextAlarm:hover span:nth-child(7) {
+  animation-delay: 0.3s;
 }
 
+@keyframes wave {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-8px);
+  }
+  60% {
+    transform: translateY(8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 
 .stopButton {
   margin-top: 8px;
@@ -98,7 +118,7 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   padding: 12px;
   z-index: 9999;
-color: white;
+  color: white;
   /* Reativa os cliques apenas dentro do popup */
   pointer-events: auto;
 }
