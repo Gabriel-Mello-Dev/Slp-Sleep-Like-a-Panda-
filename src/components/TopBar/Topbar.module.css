@@ -78,7 +78,7 @@
   right: 0;
   top: 44px;
   background: black;
-  color: var(--color-text);
+  color: white;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 8px;
@@ -90,7 +90,7 @@
   transition: background 0.3s, color 0.3s;
 }
 .profileMenu a {
-  color: var(--color-text);
+  color: white;
   text-decoration: none;
   padding: 8px;
   border-radius: 6px;

@@ -10,7 +10,7 @@
   background-color: var(--color-bg);
   animation: fadeIn 0.8s ease-in-out;
   transition: background-color 0.3s, color 0.3s;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 /* Título */
@@ -56,14 +56,14 @@
   cursor: pointer;
   margin: 0.5rem 0;
   transition: all 0.25s ease;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   width: 20vw;
 }
 
 .button:hover {
   background: var(--color-accent-hover);
   transform: scale(1.05) translateY(-1px);
-  box-shadow: 0 5px 12px rgba(0,0,0,0.25);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
 }
 
 /* Botão de desativar alarmes */
@@ -79,13 +79,13 @@
 /* Mensagens */
 .success {
   margin-top: 0.8rem;
-  color: #4ade80; 
+  color: #4ade80;
   font-weight: 600;
 }
 
 .error {
   margin-top: 0.8rem;
-  color: #f87171; 
+  color: #f87171;
   font-weight: 600;
 }
 
@@ -105,7 +105,7 @@
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-   border: 2px solid black;
+  border: 2px solid black;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.952);
   color: white;
@@ -114,8 +114,8 @@
 
 .alarmeItem:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  background-color: rgba(0,0,0,0.25);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 /* Checkbox maior */
@@ -147,11 +147,21 @@
 
 /* Animações suaves */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
