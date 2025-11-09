@@ -10,4 +10,4 @@ const Foot = () => {
   );
 };
 
-export  {Foot};
+export { Foot };

@@ -1,1 +1,1 @@
-export * from './useAppContext'
+export * from "./useAppContext";

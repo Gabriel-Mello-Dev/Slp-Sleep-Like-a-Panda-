@@ -10,7 +10,7 @@
 .title {
   text-align: center;
   margin-bottom: 20px;
-  color: black
+  color: black;
 }
 
 .input {
@@ -22,9 +22,8 @@
   font-size: 16px;
 }
 
-.classh2{
-
-  color:#080808
+.classh2 {
+  color: #080808;
 }
 
 .button {
@@ -48,9 +47,8 @@
   text-align: center;
 }
 
-.sair{
-background-color: red;
-
+.sair {
+  background-color: red;
 }
 
 .error {
@@ -59,6 +57,6 @@ background-color: red;
   text-align: center;
 }
 
-label{
-  color: black
+label {
+  color: black;
 }

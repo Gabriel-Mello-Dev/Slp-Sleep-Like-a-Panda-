@@ -57,7 +57,10 @@ export default function Perfil() {
         onChange={(e) => setEmail(e.target.value)}
       />
       <button onClick={salvarPerfil}>Salvar</button>
-      <button onClick={logout} style={{ marginTop: "10px", backgroundColor: "rgb(202, 49, 49)"}}>
+      <button
+        onClick={logout}
+        style={{ marginTop: "10px", backgroundColor: "rgb(202, 49, 49)" }}
+      >
         Sair
       </button>
       {msg && <p>{msg}</p>}

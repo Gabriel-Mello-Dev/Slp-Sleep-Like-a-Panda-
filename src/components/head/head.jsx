@@ -35,11 +35,7 @@ const Head = () => {
       <div className={styles.logo}>
         {clicked ? (
           <button onClick={handleClick} className={styles.transparentButton}>
-            <img
-              src="/cute.gif"
-              alt="Panda Acordado"
-              width={150}
-            />
+            <img src="/cute.gif" alt="Panda Acordado" width={150} />
           </button>
         ) : (
           <button onClick={handleClick} className={styles.transparentButton}>
@@ -76,8 +72,16 @@ const Head = () => {
 
       {/* Botões */}
       <div className={styles.buttons}>
-        {!user && <Link to="/Singup" className={styles.register}>Criar conta</Link>}
-        {!user && <Link to="/Login" className={styles.signIn}>Logar</Link>}
+        {!user && (
+          <Link to="/Singup" className={styles.register}>
+            Criar conta
+          </Link>
+        )}
+        {!user && (
+          <Link to="/Login" className={styles.signIn}>
+            Logar
+          </Link>
+        )}
       </div>
     </header>
   );

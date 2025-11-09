@@ -72,9 +72,9 @@
 .bambooLeft,
 .bambooRight {
   position: absolute;
-  top: 50%;                /* centraliza verticalmente */
+  top: 50%; /* centraliza verticalmente */
   transform: translateY(-50%);
-  z-index: -1;             /* atrás do container */
+  z-index: -1; /* atrás do container */
   animation: sway 5s ease-in-out infinite;
 }
 
@@ -90,7 +90,7 @@
 /* Ajuste das imagens dos bambus */
 .bambooLeft img,
 .bambooRight img {
-  height: 500px;           /* altura maior */
+  height: 500px; /* altura maior */
   object-fit: contain;
 }
 

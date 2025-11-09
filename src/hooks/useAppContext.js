@@ -1,11 +1,10 @@
-import { useContext } from "react"
-import { AppContext } from "../contexts"
+import { useContext } from "react";
+import { AppContext } from "../contexts";
 
-const useAppContext= ()=>{
-const contexto = useContext(AppContext)
+const useAppContext = () => {
+  const contexto = useContext(AppContext);
 
-return contexto
+  return contexto;
+};
 
-}
-
-export {useAppContext}
+export { useAppContext };

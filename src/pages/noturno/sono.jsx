@@ -1,17 +1,24 @@
 import { useState, useEffect, useRef } from "react";
 import style from "./sono.module.css";
-import { Clock } from "../../components";
 
 const Sono = () => {
-  const [hours, setHours] = useState(8);
+  const isLogged = localStorage.getItem("userId"); // ✅ verifica login
+  const [hours, setHours] = useState(isLogged ? 8 : 1);
   const [timeLeft, setTimeLeft] = useState(hours * 3600);
   const [isRunning, setIsRunning] = useState(false);
+  const [msg, setMsg] = useState("");
   const audioRef = useRef(null);
   const intervalRef = useRef(null);
 
   useEffect(() => {
+    if (!isLogged) {
+      setHours(1);
+      setMsg("⚠️ Usuários não logados só podem usar até 1 hora.");
+    } else {
+      setMsg("");
+    }
     setTimeLeft(hours * 3600);
-  }, [hours]);
+  }, [hours, isLogged]);
 
   useEffect(() => {
     if (!isRunning) return;
@@ -59,25 +66,35 @@ const Sono = () => {
   };
 
   const iniciar = () => {
+    if (!isLogged) {
+      setMsg("⚠️ Faça login para aumentar o tempo de sono acima de 1 hora.");
+    }
     setTimeLeft(hours * 3600);
     setIsRunning(true);
   };
 
   return (
     <div className={style.container}>
-      <h1 className={style.title}>Modo Sono</h1>
-      <h2>Indique a quantia de horas desejadas</h2>
-      <Clock type="popup" />
+      <h1 className={style.title}>😴 Modo Sono</h1>
+      <h2>Informe quantas horas deseja dormir</h2>
+
       <div className={style.controls}>
+        {!isLogged && (
+          <div className={style.alertBox}>
+            ⚠️ Modo limitado — usuários não logados só podem usar 1 hora.
+          </div>
+        )}
+
         <input
           type="number"
           min="1"
-          max="24"
+          max={isLogged ? "24" : "1"}
           value={hours}
           onChange={(e) => setHours(Number(e.target.value))}
-          disabled={isRunning}
+          disabled={!isLogged || isRunning} // 🚫 bloqueia se não logado
           className={style.input}
         />
+
         <div>
           <button
             onClick={iniciar}
@@ -86,13 +103,16 @@ const Sono = () => {
           >
             Iniciar
           </button>
-          <button onClick={desligar} className={style.button}>
+
+          <button onClick={desligar} className={style.buttonRed}>
             Desligar
           </button>
         </div>
       </div>
 
-      <h2>Tempo restante: {formatTime(timeLeft)}</h2>
+      {msg && <p className={style.msg}>{msg}</p>}
+
+      <h2>⏳ Tempo restante: {formatTime(timeLeft)}</h2>
 
       <audio ref={audioRef} src="/rain.mp3" loop />
 
@@ -100,7 +120,7 @@ const Sono = () => {
         <div className={style.dimmingOverlay}>
           <img
             src="https://juststickers.in/wp-content/uploads/2021/01/sleeping-panda.png"
-            alt="Panda sleep"
+            alt="Panda dormindo"
           />
         </div>
       )}

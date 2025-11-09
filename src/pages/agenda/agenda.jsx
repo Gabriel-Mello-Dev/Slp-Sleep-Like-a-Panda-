@@ -23,8 +23,18 @@ const Agenda = () => {
   const rawUserId = localStorage.getItem("userId");
 
   const monthNames = [
-    "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
-    "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro",
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
   ];
 
   const currentMonthName = monthNames[currentMonth];
@@ -50,7 +60,8 @@ const Agenda = () => {
           const monthOk = a.mes === currentMonthName;
           const dayOk =
             a.dia > currentDay ||
-            (a.dia === currentDay && a.horario >= today.toTimeString().slice(0, 5));
+            (a.dia === currentDay &&
+              a.horario >= today.toTimeString().slice(0, 5));
           return monthOk && dayOk;
         });
 
@@ -101,7 +112,9 @@ const Agenda = () => {
       );
 
       if (!existing && local.length >= 2) {
-        setMsg("⚠️ Máximo de 2 agendas sem login atingido. Faça login para adquirir mais.");
+        setMsg(
+          "⚠️ Máximo de 2 agendas sem login atingido. Faça login para adquirir mais."
+        );
         return;
       }
 
@@ -336,8 +349,12 @@ const Agenda = () => {
         <div className={styles.popupOverlay}>
           <div className={styles.popup}>
             <h2>⏰ Lembrete</h2>
-            <p><strong>{activeAlarm.mensagem}</strong></p>
-            <p>{activeAlarm.dia} de {activeAlarm.mes} às {activeAlarm.horario}</p>
+            <p>
+              <strong>{activeAlarm.mensagem}</strong>
+            </p>
+            <p>
+              {activeAlarm.dia} de {activeAlarm.mes} às {activeAlarm.horario}
+            </p>
             <button onClick={stopAlarm} className={styles.stopButton}>
               Parar Alarme
             </button>

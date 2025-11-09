@@ -50,9 +50,7 @@ const TopBar = () => {
       localStorage.setItem("theme", "dark");
     }
 
-location.reload();
-
-
+    location.reload();
   };
 
   useEffect(() => {

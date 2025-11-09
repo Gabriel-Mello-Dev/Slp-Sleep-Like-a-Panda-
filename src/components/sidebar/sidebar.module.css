@@ -43,6 +43,6 @@
 
 .active {
   background: var(--accent-4);
-  box-shadow: 0 0 0 2px  var(--color-border)inset;
+  box-shadow: 0 0 0 2px var(--color-border) inset;
   background: red;
 }
