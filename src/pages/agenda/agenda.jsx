@@ -1,10 +1,13 @@
 // src/components/Agenda/Agenda.jsx
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { api } from "../../services";
 import styles from "./agenda.module.css";
 import { Clock } from "../../components";
+import { AppContext } from "../../contexts/AppContext";
 
 const Agenda = () => {
+  const { msg, setMsg } = useContext(AppContext); // 🧠 importa o msg global
+
   const [selectedDay, setSelectedDay] = useState(null);
   const [alarmTime, setAlarmTime] = useState("");
   const [message, setMessage] = useState("");
@@ -20,18 +23,8 @@ const Agenda = () => {
   const rawUserId = localStorage.getItem("userId");
 
   const monthNames = [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro",
+    "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+    "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro",
   ];
 
   const currentMonthName = monthNames[currentMonth];
@@ -44,7 +37,6 @@ const Agenda = () => {
   useEffect(() => {
     const fetchSchedules = async () => {
       if (!isLogged) {
-        // carrega do localStorage
         const local = JSON.parse(localStorage.getItem("localAgendas") || "[]");
         setSchedules(local);
         return;
@@ -58,8 +50,7 @@ const Agenda = () => {
           const monthOk = a.mes === currentMonthName;
           const dayOk =
             a.dia > currentDay ||
-            (a.dia === currentDay &&
-              a.horario >= today.toTimeString().slice(0, 5));
+            (a.dia === currentDay && a.horario >= today.toTimeString().slice(0, 5));
           return monthOk && dayOk;
         });
 
@@ -98,20 +89,19 @@ const Agenda = () => {
   // === Salvar ou atualizar ===
   const handleSave = async () => {
     if (!selectedDay || !alarmTime || !message) {
-      alert("Preencha todos os campos!");
+      setMsg("⚠️ Preencha todos os campos!");
       return;
     }
 
     // === SEM LOGIN ===
     if (!isLogged) {
       let local = JSON.parse(localStorage.getItem("localAgendas") || "[]");
-
-      // se já tiver 2 e não for atualização
       const existing = local.find(
         (a) => a.dia === selectedDay && a.mes === currentMonthName
       );
+
       if (!existing && local.length >= 2) {
-        alert("⚠️ Máximo de 2 agendas sem login atingido. Faça login para adquirir mais.");
+        setMsg("⚠️ Máximo de 2 agendas sem login atingido. Faça login para adquirir mais.");
         return;
       }
 
@@ -124,9 +114,7 @@ const Agenda = () => {
       };
 
       if (existing) {
-        local = local.map((a) =>
-          a.id === existing.id ? newAgenda : a
-        );
+        local = local.map((a) => (a.id === existing.id ? newAgenda : a));
       } else {
         local.push(newAgenda);
       }
@@ -134,7 +122,7 @@ const Agenda = () => {
       localStorage.setItem("localAgendas", JSON.stringify(local));
       setSchedules(local);
 
-      alert("Agendamento salvo localmente!");
+      setMsg("✅ Agendamento salvo localmente!");
       setSelectedDay(null);
       setAlarmTime("");
       setMessage("");
@@ -168,13 +156,13 @@ const Agenda = () => {
       const filtered = res.data.filter((a) => a.mes === currentMonthName);
       setSchedules(filtered);
 
-      alert("Agendamento salvo!");
+      setMsg("✅ Agendamento salvo!");
       setSelectedDay(null);
       setAlarmTime("");
       setMessage("");
     } catch (err) {
       console.error(err);
-      alert("Erro ao salvar no banco.");
+      setMsg("❌ Erro ao salvar no banco.");
     }
   };
 
@@ -188,23 +176,22 @@ const Agenda = () => {
         (a) => a.dia === selectedDay && a.mes === currentMonthName
       );
       if (!existing) {
-        alert("Nenhum agendamento neste dia.");
+        setMsg("⚠️ Nenhum agendamento neste dia.");
         return;
       }
 
-      if (!confirm("Deseja excluir este agendamento?")) return;
+      if (!window.confirm("Deseja excluir este agendamento?")) return;
 
       local = local.filter((a) => a.id !== existing.id);
       localStorage.setItem("localAgendas", JSON.stringify(local));
       setSchedules(local);
-      alert("Agendamento removido!");
+      setMsg("🗑️ Agendamento removido!");
       setSelectedDay(null);
       setAlarmTime("");
       setMessage("");
       return;
     }
 
-    // --- logado ---
     const existing = schedules.find(
       (a) =>
         a.dia === selectedDay &&
@@ -212,22 +199,22 @@ const Agenda = () => {
         a.userId === rawUserId
     );
     if (!existing) {
-      alert("Nenhum agendamento neste dia.");
+      setMsg("⚠️ Nenhum agendamento neste dia.");
       return;
     }
 
-    if (!confirm("Deseja excluir este agendamento?")) return;
+    if (!window.confirm("Deseja excluir este agendamento?")) return;
 
     try {
       await api.delete(`/tempos/${existing.id}`);
       setSchedules((prev) => prev.filter((a) => a.id !== existing.id));
-      alert("Agendamento removido!");
+      setMsg("🗑️ Agendamento removido!");
       setSelectedDay(null);
       setAlarmTime("");
       setMessage("");
     } catch (err) {
       console.error(err);
-      alert("Erro ao excluir agendamento.");
+      setMsg("❌ Erro ao excluir agendamento.");
     }
   };
 
@@ -252,6 +239,7 @@ const Agenda = () => {
           audioRef.current.play().catch(() => {});
           setActiveAlarm(agenda);
           setTriggered((prev) => new Set(prev).add(agenda.id));
+          setMsg(`🔔 ${agenda.mensagem}`);
         }
       });
     }, 1000);
@@ -265,6 +253,7 @@ const Agenda = () => {
       audioRef.current.currentTime = 0;
     }
     setActiveAlarm(null);
+    setMsg("🔕 Alarme parado.");
   };
 
   return (
@@ -347,12 +336,8 @@ const Agenda = () => {
         <div className={styles.popupOverlay}>
           <div className={styles.popup}>
             <h2>⏰ Lembrete</h2>
-            <p>
-              <strong>{activeAlarm.mensagem}</strong>
-            </p>
-            <p>
-              {activeAlarm.dia} de {activeAlarm.mes} às {activeAlarm.horario}
-            </p>
+            <p><strong>{activeAlarm.mensagem}</strong></p>
+            <p>{activeAlarm.dia} de {activeAlarm.mes} às {activeAlarm.horario}</p>
             <button onClick={stopAlarm} className={styles.stopButton}>
               Parar Alarme
             </button>

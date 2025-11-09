@@ -5,15 +5,15 @@ import { api } from "../services";
 export const AppContext = createContext({});
 
 export const AppContextProvider = ({ children }) => {
-const [msg,setMsg]= useState("")
+  const [msg, setMsg] = useState("");
+
   // --- Relógio / Alarme (centralizado)
-  // timeLeft em segundos
   const [timeLeft, setTimeLeft] = useState(() => {
     const saved = localStorage.getItem("tempo");
     return saved ? Number(saved) : 0;
   });
 
-  const dbLastValue = useRef(0); // valor em minutos vindo do DB
+  const dbLastValue = useRef(0);
   const [alarmPlaying, setAlarmPlaying] = useState(false);
   const [alarmType, setAlarmType] = useState(1);
   const audioRef = useRef(null);
@@ -25,6 +25,7 @@ const [msg,setMsg]= useState("")
     typeof window !== "undefined" ? localStorage.getItem("userId") : null;
   const CHECK_INTERVAL_MS = 5000;
 
+  // === Buscar agendamentos do usuário ===
   useEffect(() => {
     if (!userId) return;
 
@@ -34,15 +35,16 @@ const [msg,setMsg]= useState("")
         if (Array.isArray(res.data)) setAgendamentos(res.data);
       } catch (err) {
         console.error("Erro ao buscar agendamentos:", err);
+        setMsg("❌ Erro ao carregar agendamentos.");
       }
     };
 
     fetchAgendamentos();
   }, [userId]);
 
-  // 💾 salvar/atualizar agendamento
+  // === Salvar novo agendamento ===
   const salvarAgendamento = async ({ dia, mes, horario, mensagem }) => {
-    if (!userId) return alert("⚠️ Usuário não logado.");
+    if (!userId) return setMsg("⚠️ Usuário não logado.");
 
     try {
       const all = await api.get("/agendamentos");
@@ -66,11 +68,11 @@ const [msg,setMsg]= useState("")
       setMsg("✅ Alarme agendado com sucesso!");
     } catch (err) {
       console.error(err);
-      alert("❌ Erro ao salvar agendamento");
+      setMsg("❌ Erro ao salvar agendamento.");
     }
   };
 
-  // ⏰ monitorar se algum agendamento bate com o horário atual
+  // === Verificar e disparar alarmes ===
   useEffect(() => {
     const check = setInterval(() => {
       const agora = new Date();
@@ -81,9 +83,9 @@ const [msg,setMsg]= useState("")
           a.mes === agora.toLocaleString("pt-BR", { month: "long" });
         const horaMatch = a.horario === agora.toTimeString().slice(0, 5);
         if (diaMatch && mesMatch && horaMatch && !alarmPlaying) {
-          if (audioRef.current) audioRef.current.play();
+          if (audioRef.current) audioRef.current.play().catch(() => {});
           setAlarmPlaying(true);
-          alert(`🔔 ${a.mensagem || "Alarme disparado!"}`);
+          setMsg(`🔔 ${a.mensagem || "Alarme disparado!"}`);
         }
       });
     }, 1000);
@@ -91,12 +93,12 @@ const [msg,setMsg]= useState("")
     return () => clearInterval(check);
   }, [agendamentos, alarmPlaying]);
 
-  // Persistir tempo
+  // === Persistir tempo ===
   useEffect(() => {
     localStorage.setItem("tempo", String(timeLeft));
   }, [timeLeft]);
 
-  // Configura/atualiza audio quando alarmType mudar
+  // === Configurar áudio ===
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.pause();
@@ -105,35 +107,32 @@ const [msg,setMsg]= useState("")
     let src = "/alarme.mp3";
     if (alarmType === 2) src = "/alarme2.mp3";
     if (alarmType === 3) src = "/alarme3.mp3";
-    audioRef.current = new Audio("/alarme.mp3");
+    audioRef.current = new Audio(src);
     audioRef.current.loop = true;
   }, [alarmType]);
 
-  // Countdown: decrementa timeLeft a cada segundo
+  // === Contagem regressiva global ===
   useEffect(() => {
-    // evita múltiplos intervals
     if (countdownIntervalRef.current)
       clearInterval(countdownIntervalRef.current);
 
     countdownIntervalRef.current = setInterval(() => {
-      setTimeLeft((prev) => {
-        const next = prev > 0 ? prev - 1 : 0;
-        return next;
-      });
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
 
     return () => clearInterval(countdownIntervalRef.current);
   }, []);
 
-  // Quando timeLeft chegar a zero, aciona alarme (se dbLastValue > 0)
+  // === Quando tempo chega a zero ===
   useEffect(() => {
     if (timeLeft === 0 && dbLastValue.current > 0 && !alarmPlaying) {
       if (audioRef.current) audioRef.current.play().catch(() => {});
       setAlarmPlaying(true);
+      setMsg("⏰ Tempo finalizado!");
     }
   }, [timeLeft, alarmPlaying]);
 
-  // Função para parar alarme (resetar para dbLastValue)
+  // === Parar alarme ===
   const stopAlarm = () => {
     if (audioRef.current) {
       audioRef.current.pause();
@@ -141,9 +140,10 @@ const [msg,setMsg]= useState("")
     }
     setAlarmPlaying(false);
     setTimeLeft(dbLastValue.current * 60);
+    setMsg("🛑 Alarme parado.");
   };
 
-  // Polling do DB para buscar tempos do usuário
+  // === Polling para buscar tempos do usuário ===
   useEffect(() => {
     if (!userId) return;
 
@@ -153,37 +153,32 @@ const [msg,setMsg]= useState("")
         if (!res.data || res.data.length === 0) return;
 
         const userTempo = res.data[0];
-        const dbValue = Number(userTempo.horario); // em minutos
+        const dbValue = Number(userTempo.horario);
         const dbType = Number(userTempo.tipo);
 
         if (dbValue !== dbLastValue.current) {
           dbLastValue.current = dbValue;
           setAlarmType(dbType);
           setTimeLeft(dbValue * 60);
+          setMsg(`🔄 Tempo atualizado: ${dbValue} minutos`);
         }
       } catch (err) {
         console.error("Erro ao buscar tempo do DB:", err);
+        setMsg("⚠️ Erro ao atualizar tempo do servidor.");
       }
     };
 
-    // fetch imediato
     fetchUserTempo();
-
-    // interval
     pollingIntervalRef.current = setInterval(fetchUserTempo, CHECK_INTERVAL_MS);
     return () => clearInterval(pollingIntervalRef.current);
   }, [userId]);
 
-
-
-
   return (
     <AppContext.Provider
       value={{
-        // relógio / alarme (expostos)
+        // relógio / alarme
         timeLeft,
         setTimeLeft,
-        dbLastValue, // ref (se necessário)
         alarmPlaying,
         setAlarmPlaying,
         alarmType,
@@ -191,6 +186,8 @@ const [msg,setMsg]= useState("")
         stopAlarm,
         agendamentos,
         salvarAgendamento,
+        msg,
+        setMsg, // agora acessível globalmente
       }}
     >
       {children}

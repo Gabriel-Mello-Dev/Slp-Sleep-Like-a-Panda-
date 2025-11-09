@@ -1,4 +1,3 @@
-// Loja.jsx
 import { useEffect, useState } from "react";
 import styles from "./loja.module.css";
 import { api } from "../../services";
@@ -34,6 +33,7 @@ const produtos = [
 
 export const Loja = () => {
   const [user, setUser] = useState(null);
+  const [msg, setMsg] = useState(null); // ← estado da mensagem
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
@@ -50,8 +50,14 @@ export const Loja = () => {
     fetchUser();
   }, [userId]);
 
+  // função auxiliar p/ mostrar mensagens temporárias
+  const showMsg = (text, type = "info") => {
+    setMsg({ text, type });
+    setTimeout(() => setMsg(null), 3500);
+  };
+
   const comprarSkin = async (skin) => {
-    if (!user) return alert("Faça login para comprar/equipar!");
+    if (!user) return showMsg("⚠️ Faça login para comprar/equipar!", "warn");
     const jaComprou = user.skinsCompradas.includes(skin.id);
     const skinsAtualizadas = jaComprou
       ? user.skinsCompradas
@@ -68,28 +74,50 @@ export const Loja = () => {
         skinsCompradas: skinsAtualizadas,
         skinEquipada: skin.id,
       }));
-      alert(
+      showMsg(
         `✅ ${skin.nome} ${
           jaComprou ? "equipada novamente!" : "comprada e equipada!"
-        }`
+        }`,
+        "success"
       );
     } catch (err) {
       console.error(err);
-      alert("❌ Erro ao equipar skin");
+      showMsg("❌ Erro ao equipar skin", "error");
     }
   };
 
   return (
     <div className={styles.container}>
       <h1 className={styles.titulo}>Loja de Skins de Pandas</h1>
+      <Clock type="popup" />
+
+      {msg && (
+        <div
+          className={`${styles.msg} ${
+            msg.type === "success"
+              ? styles.msgSuccess
+              : msg.type === "error"
+              ? styles.msgError
+              : msg.type === "warn"
+              ? styles.msgWarn
+              : ""
+          }`}
+        >
+          {msg.text}
+        </div>
+      )}
+
       <div className={styles.grid}>
-        <Clock type="popup" />
         {produtos.map((produto) => {
           const jaComprou = user?.skinsCompradas?.includes(produto.id);
           return (
             <div key={produto.id} className={styles.card}>
               <div className={styles.imagem}>
-                <img src={produto.url} alt={produto.nome} />
+                {produto.url ? (
+                  <img src={produto.url} alt={produto.nome} />
+                ) : (
+                  <div className={styles.semImagem}>Sem imagem</div>
+                )}
               </div>
               <h2 className={styles.nome}>{produto.nome}</h2>
               <p className={styles.preco}>
