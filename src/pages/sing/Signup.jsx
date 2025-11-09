@@ -79,9 +79,12 @@ export default function Signup() {
         onChange={(e) => setSenha(e.target.value)}
       />
 
-      <a href="/Login" style={{ color: "aquamarine" }}>
+      <span
+        onClick={() => navigate("/Login")}
+        style={{ cursor: "pointer", color: "#09f" }}
+      >
         já possui uma conta?
-      </a>
+      </span>
       <button onClick={criarConta}>Criar Conta</button>
       {msg && (
         <p className={msg.includes("✅") ? styles.success : styles.error}>
