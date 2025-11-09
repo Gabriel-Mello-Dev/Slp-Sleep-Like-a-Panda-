@@ -54,7 +54,7 @@ export default function Login() {
 
   return (
     <div className={styles.container}>
-      <h2>Login</h2>
+      <h2 style={{ color: "white" }}>Login</h2>
       <input
         placeholder="Email"
         value={email}

@@ -61,7 +61,7 @@ export default function Signup() {
 
   return (
     <div className={styles.container}>
-      <h2>Criar Conta</h2>
+      <h2 style={{ color: "white" }}>Criar Conta</h2>
       <input
         placeholder="Nome"
         value={nome}
@@ -78,6 +78,10 @@ export default function Signup() {
         value={senha}
         onChange={(e) => setSenha(e.target.value)}
       />
+
+      <a href="/Login" style={{ color: "aquamarine" }}>
+        já possui uma conta?
+      </a>
       <button onClick={criarConta}>Criar Conta</button>
       {msg && (
         <p className={msg.includes("✅") ? styles.success : styles.error}>
