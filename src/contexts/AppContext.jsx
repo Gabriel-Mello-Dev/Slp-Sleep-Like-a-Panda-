@@ -5,12 +5,7 @@ import { api } from "../services";
 export const AppContext = createContext({});
 
 export const AppContextProvider = ({ children }) => {
-  const [criador] = useState("Gabriel Mello");
-  const [loadingCriar, setLoadingCriar] = useState(false);
-  const [loadingDeletar, setLoadingDeletar] = useState(null);
-  const [loadingEditar, setLoadingEditar] = useState(null);
-  const [loadingCarregar, setLoadingCarregar] = useState(false);
-
+const [msg,setMsg]= useState("")
   // --- Relógio / Alarme (centralizado)
   // timeLeft em segundos
   const [timeLeft, setTimeLeft] = useState(() => {
@@ -68,7 +63,7 @@ export const AppContextProvider = ({ children }) => {
 
       await api.post("/agendamentos", novo);
       setAgendamentos((prev) => [...prev, novo]);
-      alert("✅ Alarme agendado com sucesso!");
+      setMsg("✅ Alarme agendado com sucesso!");
     } catch (err) {
       console.error(err);
       alert("❌ Erro ao salvar agendamento");

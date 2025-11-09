@@ -38,14 +38,22 @@ const Agenda = () => {
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
-  // === Carrega apenas agendamentos do usuário logado e mês atual ===
+  const isLogged = Boolean(rawUserId);
+
+  // === Carrega agendas ===
   useEffect(() => {
     const fetchSchedules = async () => {
+      if (!isLogged) {
+        // carrega do localStorage
+        const local = JSON.parse(localStorage.getItem("localAgendas") || "[]");
+        setSchedules(local);
+        return;
+      }
+
       try {
         const res = await api.get(`/tempos?userId=${rawUserId}`);
         const all = res.data || [];
 
-        // Filtra por mês atual e remove passados
         const valid = all.filter((a) => {
           const monthOk = a.mes === currentMonthName;
           const dayOk =
@@ -55,7 +63,6 @@ const Agenda = () => {
           return monthOk && dayOk;
         });
 
-        // Remove do banco os passados
         const expired = all.filter(
           (a) => a.mes === currentMonthName && a.dia < currentDay
         );
@@ -88,13 +95,53 @@ const Agenda = () => {
     }
   };
 
-  // === Salvar ou atualizar agendamento ===
+  // === Salvar ou atualizar ===
   const handleSave = async () => {
     if (!selectedDay || !alarmTime || !message) {
       alert("Preencha todos os campos!");
       return;
     }
 
+    // === SEM LOGIN ===
+    if (!isLogged) {
+      let local = JSON.parse(localStorage.getItem("localAgendas") || "[]");
+
+      // se já tiver 2 e não for atualização
+      const existing = local.find(
+        (a) => a.dia === selectedDay && a.mes === currentMonthName
+      );
+      if (!existing && local.length >= 2) {
+        alert("⚠️ Máximo de 2 agendas sem login atingido. Faça login para adquirir mais.");
+        return;
+      }
+
+      const newAgenda = {
+        id: existing ? existing.id : Date.now(),
+        dia: selectedDay,
+        mes: currentMonthName,
+        horario: alarmTime,
+        mensagem: message,
+      };
+
+      if (existing) {
+        local = local.map((a) =>
+          a.id === existing.id ? newAgenda : a
+        );
+      } else {
+        local.push(newAgenda);
+      }
+
+      localStorage.setItem("localAgendas", JSON.stringify(local));
+      setSchedules(local);
+
+      alert("Agendamento salvo localmente!");
+      setSelectedDay(null);
+      setAlarmTime("");
+      setMessage("");
+      return;
+    }
+
+    // === LOGADO ===
     const newAgenda = {
       dia: selectedDay,
       mes: currentMonthName,
@@ -131,9 +178,33 @@ const Agenda = () => {
     }
   };
 
-  // === Excluir agendamento ===
+  // === Excluir ===
   const handleDelete = async () => {
     if (!selectedDay) return;
+
+    if (!isLogged) {
+      let local = JSON.parse(localStorage.getItem("localAgendas") || "[]");
+      const existing = local.find(
+        (a) => a.dia === selectedDay && a.mes === currentMonthName
+      );
+      if (!existing) {
+        alert("Nenhum agendamento neste dia.");
+        return;
+      }
+
+      if (!confirm("Deseja excluir este agendamento?")) return;
+
+      local = local.filter((a) => a.id !== existing.id);
+      localStorage.setItem("localAgendas", JSON.stringify(local));
+      setSchedules(local);
+      alert("Agendamento removido!");
+      setSelectedDay(null);
+      setAlarmTime("");
+      setMessage("");
+      return;
+    }
+
+    // --- logado ---
     const existing = schedules.find(
       (a) =>
         a.dia === selectedDay &&
@@ -169,12 +240,10 @@ const Agenda = () => {
       const currentMonthNameNow = monthNames[now.getMonth()];
 
       schedules.forEach((agenda) => {
-        if (agenda.userId !== rawUserId) return;
-        if (agenda.mes !== currentMonthNameNow) return;
-
         const alreadyTriggered = triggered.has(agenda.id);
 
         if (
+          agenda.mes === currentMonthNameNow &&
           agenda.dia === currentDayNum &&
           agenda.horario === currentTime &&
           !alreadyTriggered
@@ -188,7 +257,7 @@ const Agenda = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [schedules, triggered, rawUserId]);
+  }, [schedules, triggered]);
 
   const stopAlarm = () => {
     if (audioRef.current) {
@@ -203,6 +272,12 @@ const Agenda = () => {
       <h1 className={styles.title}>
         Agenda - {currentMonthName} {currentYear}
       </h1>
+
+      {!isLogged && (
+        <p className={styles.offlineWarning}>
+          ⚠️ Você não está logado. Apenas 2 lembretes são permitidos.
+        </p>
+      )}
 
       <Clock type="popup" />
 
@@ -228,13 +303,11 @@ const Agenda = () => {
               <div>{day}</div>
               {agenda && (
                 <>
-                <div className={styles.timeLabel}>{agenda.horario}</div>
-                                  <div className={styles.msgLabel}>{agenda.mensagem}</div>
-
+                  <div className={styles.timeLabel}>{agenda.horario}</div>
+                  <div className={styles.msgLabel}>{agenda.mensagem}</div>
                 </>
               )}
             </div>
-            
           );
         })}
       </div>
@@ -270,7 +343,6 @@ const Agenda = () => {
         </div>
       )}
 
-      {/* Pop-up do alarme */}
       {activeAlarm && (
         <div className={styles.popupOverlay}>
           <div className={styles.popup}>

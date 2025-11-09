@@ -86,6 +86,17 @@ export const Inicial = () => {
         className={styles.moonPanda}
       />
 
+
+ {/* 🔹 Botão de teste para novos usuários */}
+    {!userId && (
+      <button
+        onClick={() => (window.location.href = "/Alarmes")}
+        className={styles.testButton}
+      >
+        🐼 Novo usuário? teste o sistema apenas com 5 minutos, caso queira aumentar, faça sua conta!🐼
+      </button>
+    )}
+
       {/* Bambu Esquerdo */}
       <div className={styles.bambooLeft}>
         <img
